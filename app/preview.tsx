@@ -1,42 +1,26 @@
-import type { t__Props, t__PropChildren } from "./type";
+import type { t__Props } from "./type";
+
+const urls = [
+  [
+    ["sample1-1.com", "sample1-2.example.com"],
+  ],
+  [
+    ["sample2-1.com", "sample2-2.example.com"],
+  ],
+  [
+    ["sample3-1.com", "sample3-2.example.com"],
+  ]
+];
 
 const missions =[
   [
-    [
-      ["Mission1-1-1 適切なcookieを設定してください。"],
-      ["Mission1-1-2 適切なcookieを設定してください。"],
-      ["Mission1-1-3 適切なcookieを設定してください。"],
-      ["Mission1-1-4 適切なcookieを設定してください。"],
-    ],
-    [
-      ["Mission1-2-1 適切なcookieを設定してください。"],
-      ["Mission1-2-2 適切なcookieを設定してください。"],
-      ["Mission1-2-3 適切なcookieを設定してください。"],
-    ],
+    ["1-1適切なcookieを設定して、example.comにアクセスしてください。", "1-2適切なcookieを設定して、example.comにアクセスしてください。"],
   ],
   [
-    [
-      ["Mission2-1-1 適切なcookieを設定してください。"],
-      ["Mission2-1-2 適切なcookieを設定してください。"],
-      ["Mission2-1-3 適切なcookieを設定してください。"],
-    ],
-    [
-      ["Mission2-2-1 適切なcookieを設定してください。"],
-      ["Mission2-2-2 適切なcookieを設定してください。"],
-      ["Mission2-2-3 適切なcookieを設定してください。"],
-    ],
+    ["2-1適切なcookieを設定して、example.comにアクセスしてください。", "2-2適切なcookieを設定して、example.comにアクセスしてください。"],
   ],
   [
-    [
-      ["Mission3-1-1 適切なcookieを設定してください。"],
-      ["Mission3-1-2 適切なcookieを設定してください。"],
-      ["Mission3-1-3 適切なcookieを設定してください。"],
-    ],
-    [
-      ["Mission3-2-1 適切なcookieを設定してください。"],
-      ["Mission3-2-2 適切なcookieを設定してください。"],
-      ["Mission3-2-3 適切なcookieを設定してください。"]
-    ]
+    ["3-1適切なcookieを設定して、example.comにアクセスしてください。", "3-2適切なcookieを設定して、example.comにアクセスしてください。"],
   ]
 ];
 
@@ -45,11 +29,19 @@ const Preview: React.FC<t__Props> = ({level, step}) => {
   return (
     <section>
       <h2 className="sr-only">プレビュー画面</h2>
-      <div>
+      <div className="flex column">
         <div className="flex items-center align-center">
           <div>
-            <p><span>https://</span></p>
+            <h3 className="sr-only">URL</h3>
+            <p><span>https://</span>{urls[level][step]}</p>
           </div>
+        </div>
+        <div>
+          <h3>
+            <span aria-hidden="true">Mission</span>
+            <span className="sr-only">ミッション</span>
+          </h3>
+          <p>{missions[level][step]}</p>
         </div>
       </div>
     </section>
