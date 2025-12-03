@@ -1,19 +1,21 @@
+import Header from "./(components)/header";
+import Explains from "./(components)/explains";
+import MoreInfo from "./(components)/moreinfo";
+import Preview from "./(components)/preview";
+import Options from "./(components)/options";
+
 export default function Home() {
+  const step = 0;
+  const level = 0;
+
   return (
-    <div className="">
-      <header className="flex justify-center">
-        <div className="flex max-w-6xl items-center h-[70px]">
-          <h1>Cookie Dealer</h1>
-          <div>
-            <a href="/login">
-              <p>ログイン</p>
-            </a>
-            <a href="/register">
-              会員登録
-            </a>
-          </div>
-        </div>
-      </header>
+    <div className="p-4 flex justify-center">
+      <div className="w-full max-w-4xl flex flex-col">
+        <Explains step={step} level={level} />
+        <MoreInfo step={step} level={level} />
+        <Preview step={step} level={level} />
+        <Options step={step} level={level} />
+      </div>
     </div>
   );
 }
