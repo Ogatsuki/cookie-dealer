@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${notoSansJP.className} antialiased flex flex-col `}
+        className={`${notoSansJP.className} antialiased flex flex-col`}
       >
         <div className="min-h-screen flex flex-col justify-start">
           <div className="flex-1 flex flex-col">
