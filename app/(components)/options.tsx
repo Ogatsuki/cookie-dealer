@@ -85,9 +85,6 @@ const Options: React.FC<t__Props> = ({level, step}) => {
           )
         })}
       </div>
-      <div className="flex justify-center items-center">
-        <button className="mt-8 px-4 py-2 bg-blue-700/90 text-white rounded-md text-sm font-bold hover:shadow-md">サーバーに送信</button>
-      </div>
     </section>
   )
 }

@@ -87,19 +87,12 @@
 
 ---
 
-## 5. UI/UX・デザインガイドライン
-*   **トーン＆マナー:** 「親しみやすい開発者ツール」。
-    *   ダークモードベースのエディタ風配色（Slate/Gray）に、アクセントカラー（Blue/Green）を使用。
-*   **視覚的ヒント:**
-    *   Cookieカードの色と、ターゲットドメインの色を微妙にリンクさせない（安易な色合わせゲームにしないため）。あくまで文字情報（ドメイン文字列）で判断させる。
-*   **レスポンシブ:**
-    *   PCでは左右2カラム（左:ブラウザ / 右:手札）。
-    *   SPでは縦積み（上:ブラウザ / 下:手札）。
-
----
-
 ## 6. 技術スタック
 *   **Framework:** Next.js (TypeScript)
-*   **Styling:** Tailwind CSS, Lucide React (Icons)
+*   **Styling:** Tailwind CSS, React (Icons)
 *   **Backend/Auth:** Supabase
-*   **Deployment:** Vercel
+*   **Deployment:** cloud run
+
+
+## DB, APIの使い方
+・supabaseに、どの問題にどの回答を選択したかを記録していく。
