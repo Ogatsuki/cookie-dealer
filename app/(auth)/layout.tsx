@@ -1,10 +1,12 @@
-import Header from "../(components)/header";
+import Link from "next/link"
+import Login from "./login/page"
+import Register from "./register/page"
 
-export default function AuthLayout(
+export default function AuthLayout (
   { children }: Readonly<{ children: React.ReactNode }>
 ) {
   return (
-    <div className="flex flex-col">
+    <div className="w-full flex-1 flex justify-center items-center">
       {children}
     </div>
   )
