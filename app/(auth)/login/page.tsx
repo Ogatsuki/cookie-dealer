@@ -11,14 +11,14 @@ export default async function Login() {
       <div className="flex-1 flex flex-col h-100 mt-6 border border-gray-300 rounded-xl shadow-sm px-11 pt-10 ">
         <form className="flex-1 flex flex-col pb-9 text-gray-900">
           <div className="flex flex-col space-y-5">
-            <div className="flex flex-col space-y-2">
+            <label className="flex flex-col space-y-2">
               <h3 className="tracking-wide">メールアドレス</h3>
               <input type="email" className="border border-gray-300 rounded-md px-[10px] py-1"/>
-            </div>
-            <div className="flex flex-col space-y-2">
+            </label>
+            <label className="flex flex-col space-y-2">
               <h3 className="tracking-wide">パスワード</h3>
               <input type="text" className="border border-gray-300 rounded-md px-[10px] py-1"/>
-            </div>
+            </label>
           </div>
           <div className="flex-1 flex items-end">
             <button className="duration-200 w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">ログイン</button>
