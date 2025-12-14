@@ -3,6 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/header";
 import Footer from './(components)/footer';
+import { createClient } from "./(auth)/client";
 
 const notoSansJP = Noto_Sans_JP({
   weight: ["400", "500", "700", "900"],
@@ -20,6 +21,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const { data: { user }} = await supabase.auth.getUser();
+  const isLoggedIN = !!user;
+
   return (
     <html lang="ja">
       <body className={`${notoSansJP.className} antialiased flex flex-col`}      >
