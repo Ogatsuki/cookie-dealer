@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from './client';
+import { redirect } from 'next/navigation';
 
 export type responseState = {
   success: boolean,
@@ -9,8 +10,22 @@ export type responseState = {
 
 
 
-const signin = async () => {
+const signIn = async (_prevResponseState: responseState, formData: FormData) => {
+  const supabase = createClient();
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  const { error } = await supabase.auth.signIn({
+    email: email,
+    password: password
+  });
   
+  if (error) {
+    console.log(error);
+    return { success: false, error: error.message };
+  }
+
+  redirect('/?signout=success');
 }
 
 
@@ -21,8 +36,8 @@ const signUp = async (_prevResponseState: responseState, formData: FormData) => 
   const password = formData.get('password') as string;
 
   const { error } = await supabase.auth.signUp({
-    email,
-    password
+    email: email,
+    password: password
   })
 
   if (error) {
@@ -30,13 +45,13 @@ const signUp = async (_prevResponseState: responseState, formData: FormData) => 
     return { success: false, error: error.message };
   }
 
-  return { success: true, error: null };
+  redirect('/?signup=success');
 }
 
-const signout = async () => {
+const signOut = async () => {
 
 }
 
 
 
-export { signin, signUp, signout }
+export { signIn, signUp, signOut }

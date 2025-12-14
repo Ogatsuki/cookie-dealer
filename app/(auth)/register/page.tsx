@@ -2,20 +2,28 @@
 
 import Link from "next/link"
 import { signUp } from '../actions';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import type { responseState } from '../actions';
 
 
 export default function Register() {  
   const initialState: responseState = {success: false, error: null};
   const [ formState, formAction, isPending ] = useActionState(signUp, initialState);
+  const [ isFail, setIsFail ] = useState(true);
 
-  if (formState.success)
+  if (formState.error) {
+    setIsFail(false);
+    console.log(formState.error);
+  }
+
 
   return (
     <div className='flex flex-col w-100 h-130'>
-      <div className="flex justify-center py-4">
+      <div className="flex flex-col items-center gap-4 py-4">
         <h2 className="text-3xl font-bold text-gray-700 tracking-wider">会員登録</h2>
+        {isFail && (
+          <p>{formState.error}</p>
+        )}
       </div>
       <div className="flex-1 flex flex-col h-100 mt-6 border border-gray-300 rounded-xl shadow-sm px-11 pt-10 ">
         <form action={formAction} className="flex-1 flex flex-col pb-9 text-gray-900">
@@ -30,7 +38,11 @@ export default function Register() {
             </label>
           </div>
           <div className="flex-1 flex items-end">
-            <button className="duration-200 w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">新規登録</button>
+            {!isPending ? (
+              <button className="duration-200 w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">新規登録</button>
+            ) : (
+              <p className="w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">送信中...</p>
+            )}
           </div>
         </form>
         <div className="border-t border-gray-300 py-8 flex items-center justify-center">

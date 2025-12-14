@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { site_title, site_title__screen_reader } from '../globalcontroll';
 
-export default function Header() {
+export default function Header({loginState}: {loginState: boolean}) {
   const pathname = usePathname();
   const isTop = pathname === '/';
 
@@ -17,7 +17,12 @@ export default function Header() {
               <span className="sr-only">{site_title__screen_reader}</span>
             </h1>
           </Link>
-          {isTop && (
+          {isTop && loginState && (
+            <nav className='text-white'>
+              <p>ログアウト</p>
+            </nav>
+          )}
+          {isTop && !loginState && (
             <nav className='flex justify-between max-w-[150px] w-full text-sm text-white'>
               <Link href="/login">
                 <p>ログイン</p>

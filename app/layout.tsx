@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/header";
-import Footer from "./(components)/footer";
+import Footer from './(components)/footer';
 
 const notoSansJP = Noto_Sans_JP({
   weight: ["400", "500", "700", "900"],
@@ -22,14 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body
-        className={`${notoSansJP.className} antialiased flex flex-col`}
-      >
+      <body className={`${notoSansJP.className} antialiased flex flex-col`}      >
         <div className="min-h-screen flex flex-col justify-start">
-          <div className="flex-1 flex flex-col">
-            <Header />
-            {children}
-          </div>
+          <Header loginState={false} />
+          {children}
           <Footer />
         </div>
       </body>
