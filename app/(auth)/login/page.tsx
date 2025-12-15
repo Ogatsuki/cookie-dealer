@@ -7,7 +7,6 @@ import { signIn } from '../actions';
 export default function SignInPage() {
   const initialState = { success: false, error: null };
   const [ formState, formAction, isPending ] = useActionState(signIn, initialState);
-  const [ isFail, setIsFail ] = useState(true);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
@@ -15,7 +14,7 @@ export default function SignInPage() {
     <div className='flex flex-col w-100 h-130'>
       <div className="flex flex-col items-center gap-4 py-4">
         <h2 className="text-3xl font-bold text-gray-700 tracking-wider">ログイン</h2>
-        {isFail && (
+        {formState.error && (
           <p className="text-red-500/60">{formState.error}</p>
         )}
       </div>

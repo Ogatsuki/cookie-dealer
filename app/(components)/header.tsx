@@ -17,12 +17,12 @@ export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
               <span className="sr-only">{site_title__screen_reader}</span>
             </h1>
           </Link>
-          {isTop && loginState && (
+          {isTop && isLoggedIn && (
             <nav className='text-white'>
               <p>ログアウト</p>
             </nav>
           )}
-          {isTop && !loginState && (
+          {isTop && !isLoggedIn && (
             <nav className='flex justify-between max-w-[150px] w-full text-sm text-white'>
               <Link href="/login">
                 <p>ログイン</p>
