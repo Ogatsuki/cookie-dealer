@@ -11,11 +11,11 @@ export type responseState = {
 
 
 const signIn = async (_prevResponseState: responseState, formData: FormData) => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
-  const { error } = await supabase.auth.signIn({
+  const { error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password
   });
@@ -34,6 +34,11 @@ const signUp = async (_prevResponseState: responseState, formData: FormData) => 
   const supabase = await createClient();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.+[^\s@]+$/;
+
+  if (!isEmailValid.test(email)) {
+    return { success: false, error: '正しいメールアドレスの形式で入力してください。' };
+  }
 
   const { error } = await supabase.auth.signUp({
     email: email,

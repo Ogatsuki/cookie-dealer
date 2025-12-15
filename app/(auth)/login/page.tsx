@@ -1,20 +1,22 @@
-'use server';
+'use client';
 
 import Link from "next/link"
 import { useActionState, useState } from 'react';
 import { signIn } from '../actions';
 
-export default async function signIn() {
+export default function SignInPage() {
   const initialState = { success: false, error: null };
   const [ formState, formAction, isPending ] = useActionState(signIn, initialState);
   const [ isFail, setIsFail ] = useState(true);
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
 
   return (
     <div className='flex flex-col w-100 h-130'>
       <div className="flex flex-col items-center gap-4 py-4">
         <h2 className="text-3xl font-bold text-gray-700 tracking-wider">ログイン</h2>
         {isFail && (
-          <p>{formState.error}</p>
+          <p className="text-red-500/60">{formState.error}</p>
         )}
       </div>
       <div className="flex-1 flex flex-col h-100 mt-6 border border-gray-300 rounded-xl shadow-sm px-11 pt-10 ">
@@ -22,18 +24,18 @@ export default async function signIn() {
           <div className="flex flex-col space-y-5">
             <label className="flex flex-col space-y-2">
               <h3 className="tracking-wide">メールアドレス</h3>
-              <input type="email" className="border border-gray-300 rounded-md px-[10px] py-1"/>
+              <input value={email} onChange={e => setEmail(e.target.value)} name="email" type="email" className="border border-gray-300 rounded-md px-[10px] py-1"/>
             </label>
             <label className="flex flex-col space-y-2">
               <h3 className="tracking-wide">パスワード</h3>
-              <input type="text" className="border border-gray-300 rounded-md px-[10px] py-1"/>
+              <input value={password} onChange={e => setPassword(e.target.value)} name="password" type="text" className="border border-gray-300 rounded-md px-[10px] py-1"/>
             </label>
           </div>
           <div className="flex-1 flex items-end">
             {!isPending ? (
               <button className="duration-200 w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">ログイン</button>
             ) : (
-              <p className="w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">送信中...</p>
+              <p className="text-center w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">送信中...</p>
             )}
           </div>
         </form>

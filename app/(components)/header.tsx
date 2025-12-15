@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { site_title, site_title__screen_reader } from '../globalcontroll';
 
-export default function Header({loginState}: {loginState: boolean}) {
+export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
   const pathname = usePathname();
   const isTop = pathname === '/';
 
