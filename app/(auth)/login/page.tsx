@@ -3,15 +3,17 @@
 import Link from "next/link"
 import { useActionState, useState } from 'react';
 import { signIn } from '../actions';
+import type { responseState } from '../actions';
+
 
 export default function SignInPage() {
-  const initialState = { success: false, error: null };
+  const initialState: responseState = { success: false, error: null };
   const [ formState, formAction, isPending ] = useActionState(signIn, initialState);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
   return (
-    <div className='flex flex-col w-100 h-130'>
+    <div className='flex flex-col w-100'>
       <div className="flex flex-col items-center gap-4 py-4">
         <h2 className="text-3xl font-bold text-gray-700 tracking-wider">ログイン</h2>
         {formState.error && (
@@ -30,7 +32,7 @@ export default function SignInPage() {
               <input value={password} onChange={e => setPassword(e.target.value)} name="password" type="text" className="border border-gray-300 rounded-md px-[10px] py-1"/>
             </label>
           </div>
-          <div className="flex-1 flex items-end">
+          <div className="mt-16 flex-1 flex items-end">
             {!isPending ? (
               <button className="duration-200 w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">ログイン</button>
             ) : (

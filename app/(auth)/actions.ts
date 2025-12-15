@@ -1,6 +1,6 @@
 'use server';
 
-import { createClient } from './client';
+import { createClient } from '../../utils/server/client';
 import { redirect } from 'next/navigation';
 
 export type responseState = {

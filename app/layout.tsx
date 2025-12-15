@@ -3,7 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/header";
 import Footer from './(components)/footer';
-import { createClient } from "./(auth)/client";
+import { createClient } from "../utils/server/client";
 
 const notoSansJP = Noto_Sans_JP({
   weight: ["400", "500", "700", "900"],

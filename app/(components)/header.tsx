@@ -1,12 +1,7 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { site_title, site_title__screen_reader } from '../globalcontroll';
 
-export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
-  const pathname = usePathname();
-  const isTop = pathname === '/';
+export default async function Header({isLoggedIn}: {isLoggedIn: boolean}) {
 
   return (
       <header className="flex justify-center bg-slate-800/80">
@@ -17,12 +12,12 @@ export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
               <span className="sr-only">{site_title__screen_reader}</span>
             </h1>
           </Link>
-          {isTop && isLoggedIn && (
+          {isLoggedIn && (
             <nav className='text-white'>
               <p>ログアウト</p>
             </nav>
           )}
-          {isTop && !isLoggedIn && (
+          {!isLoggedIn && (
             <nav className='flex justify-between max-w-[150px] w-full text-sm text-white'>
               <Link href="/login">
                 <p>ログイン</p>

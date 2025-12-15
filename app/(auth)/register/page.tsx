@@ -32,7 +32,7 @@ export default function RegisterPage() {
               <input value={password} onChange={e => setPassword(e.target.value)} name='password' type="text" autoComplete='current-password' required className="border border-gray-300 rounded-md px-[10px] py-1"/>
             </label>
           </div>
-          <div className="flex-1 flex items-end">
+          <div className="mt-16 flex-1 flex items-end">
             {!isPending ? (
               <button className="duration-200 w-full py-3 bg-black/80 text-white rounded-lg tracking-widest">新規登録</button>
             ) : (
