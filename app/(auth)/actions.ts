@@ -25,7 +25,7 @@ const signIn = async (_prevResponseState: responseState, formData: FormData) => 
     return { success: false, error: error.message };
   }
 
-  redirect('/?signout=success');
+  redirect('/?signIn=true');
 }
 
 
@@ -50,7 +50,7 @@ const signUp = async (_prevResponseState: responseState, formData: FormData) => 
     return { success: false, error: error.message };
   }
 
-  redirect('/?signup=success');
+  redirect('/?signup=true');
 }
 
 const signOut = async (_prevResponseState: responseState,) => {
@@ -62,7 +62,7 @@ const signOut = async (_prevResponseState: responseState,) => {
     return { success: false, error: error.message };
   }
 
-  redirect('/?signout=success');
+  redirect('/?signout=true');
 }
 
 

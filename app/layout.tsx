@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./(components)/header";
 import Footer from './(components)/footer';
 import { createClient } from "../utils/supabase/server";
+import { ToastProvider } from "./(components)/toast-provider";
 
 const notoSansJP = Noto_Sans_JP({
   weight: ["400", "500", "700", "900"],
@@ -27,7 +28,8 @@ export default async function RootLayout({
 
   return (
     <html lang="ja">
-      <body className={`${notoSansJP.className} antialiased flex flex-col`}      >
+      <body className={`${notoSansJP.className} antialiased flex flex-col relative`}>
+        <ToastProvider />
         <div className="min-h-screen flex flex-col justify-start">
           <Header isLoggedIn={isLoggedIn} />
           {children}

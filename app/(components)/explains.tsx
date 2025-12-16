@@ -14,9 +14,9 @@ const explains = [
 
 const Explains: React.FC<t__Props> = ({level, step}) => {
   return (
-    <section className="mt-6 shadow-md">
+    <section className="mt-6">
       <h2 className="font-bold text-gray-600 whitespace-pre flex flex-col gap-1"><span className="text-lg">{explains_title[level]}</span><span className="">Step : {step + 1}</span></h2>
-      <div className="flex column flex-start border-2 border-green-600/90 bg-green-600/30 p-4 rounded-lg mt-3">
+      <div className="flex column flex-start border-2 border-green-600/90 bg-green-600/30 p-4 rounded-lg mt-3 shadow-sm">
         <h2 className="min-w-[60px]">説明：</h2>
         <p className="">{explains[level]}</p>  
       </div>
