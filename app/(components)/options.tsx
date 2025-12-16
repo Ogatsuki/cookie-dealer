@@ -43,8 +43,8 @@ const values = [
 const optionsCardColors = ["lime", "blue", "purple", "red", "indigo", "light-blue", "cyan", "teal", "green"];
 
 
-const SetOptionValues: React.FC<t__PropChildren> = ({level, step, i_option}) => {
-  const valuesArray = values[level][step][i_option];
+const SetOptionValues: React.FC<t__PropChildren> = ({levelIndex, stepIndex, i_option}) => {
+  const valuesArray = values[levelIndex][stepIndex][i_option];
 
   return (
     valuesArray.map((value, i) => {
@@ -58,12 +58,12 @@ const SetOptionValues: React.FC<t__PropChildren> = ({level, step, i_option}) => 
   )
 }
 
-const Options: React.FC<t__Props> = ({level, step}) => {
+const Options: React.FC<t__Props> = ({levelIndex, stepIndex}) => {
   return (
     <section className="mt-10">
       <h2 className="sr-only">選択肢一覧</h2>
       <div className="@container grid grid-cols-3 gap-6">
-        {values[level][step].map((_, i) => {
+        {values[levelIndex][stepIndex].map((_, i) => {
           return (
             <Fragment key={i}>
               <div className={"w-full rounded-md px-5 py-5 w-[300px] h-fit shadow-lg hover:shadow-md transition duration-200 ring-1" +
@@ -78,7 +78,7 @@ const Options: React.FC<t__Props> = ({level, step}) => {
                 (i == 8 ? ` bg-green-100/50 ring-green-200` : "")
               }>
                 <dl>
-                  <SetOptionValues level={level} step={step} i_option={i} />
+                  <SetOptionValues levelIndex={levelIndex} stepIndex={stepIndex} i_option={i} />
                 </dl>
               </div>
             </Fragment>

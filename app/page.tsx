@@ -6,17 +6,17 @@ import Buttons from "./(components)/buttons";
 
 
 export default function Home() {
-  const step = 1;
-  const level = 1;
+  const stepIndex = 1;
+  const levelIndex = 1;
 
   return (
     <div className="p-4 flex justify-center flex-1">
       <div className="w-full max-w-4xl flex flex-col">
-        <Explains step={step} level={level} />
-        <MoreInfo step={step} level={level} />
-        <Preview step={step} level={level} />
-        <Options step={step} level={level} />
-        <Buttons step={step} level={level} />
+        <Explains stepIndex={stepIndex} levelIndex={levelIndex} />
+        <MoreInfo stepIndex={stepIndex} levelIndex={levelIndex} />
+        <Preview stepIndex={stepIndex} levelIndex={levelIndex} />
+        <Options stepIndex={stepIndex} levelIndex={levelIndex} />
+        <Buttons stepIndex={stepIndex} levelIndex={levelIndex} />
       </div>
     </div>
   );
