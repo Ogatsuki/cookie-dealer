@@ -6,8 +6,8 @@ import Buttons from "./(components)/buttons";
 
 
 export default function Home() {
-  const stepIndex = 1;
-  const levelIndex = 1;
+  const stepIndex = 0;
+  const levelIndex = 0;
 
   return (
     <div className="p-4 flex justify-center flex-1">
