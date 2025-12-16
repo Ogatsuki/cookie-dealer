@@ -3,7 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./(components)/header";
 import Footer from './(components)/footer';
-import { createClient } from "../utils/server/client";
+import { createClient } from "../utils/supabase/server";
 
 const notoSansJP = Noto_Sans_JP({
   weight: ["400", "500", "700", "900"],
@@ -29,7 +29,7 @@ export default async function RootLayout({
     <html lang="ja">
       <body className={`${notoSansJP.className} antialiased flex flex-col`}      >
         <div className="min-h-screen flex flex-col justify-start">
-          <Header isLoggedIn={false} />
+          <Header isLoggedIn={isLoggedIn} />
           {children}
           <Footer />
         </div>

@@ -1,6 +1,6 @@
 'use server';
 
-import { createClient } from '../../utils/server/client';
+import { createClient } from '../../utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 export type responseState = {
@@ -40,21 +40,29 @@ const signUp = async (_prevResponseState: responseState, formData: FormData) => 
     return { success: false, error: '正しいメールアドレスの形式で入力してください。' };
   }
 
-  const { error } = await supabase.auth.signUp({
+  const {error} = await supabase.auth.signUp({
     email: email,
     password: password
   })
 
   if (error) {
-    console.log(error);
+    console.log('会員登録に失敗しました:', error);
     return { success: false, error: error.message };
   }
 
   redirect('/?signup=success');
 }
 
-const signOut = async () => {
+const signOut = async (_prevResponseState: responseState,) => {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
 
+  if (error) {
+    console.log('ログアウトに失敗しました:', error);
+    return { success: false, error: error.message };
+  }
+
+  redirect('/?signout=success');
 }
 
 
