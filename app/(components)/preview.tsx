@@ -21,7 +21,7 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
             <p className="flex-1 font-bold flex"><FaLock className="mr-3 font-medium text-gray-100" /><span className="text-gray-400 whitespace-pre">https:// </span>{urls[levelIndex][stepIndex]}</p>
           </div>
         </div>
-        <div className={`bg-slate-900/80 flex-1 flex flex-col px-[20%] before:content-[''] before:block before:flex-7 after:content-[''] after:block after:flex-10 ${cardState === 1 ? 'bg-green-700/40' : ''} ${cardState === -1 ? 'bg-red-700/40' : ''}`}>
+        <div className={`flex-1 flex flex-col px-[20%] before:content-[''] before:block before:flex-7 after:content-[''] after:block after:flex-10 ${cardState === 0 ? 'bg-slate-900/80' : ''} ${cardState === 1 ? 'bg-slate-900/60' : ''} ${cardState === -1 ? 'bg-slate-900/60' : ''}`}>
           <div className="flex flex-col items-center">
             {cardState === 0 && (
               <div className="flex flex-col items-center space-y-5">
@@ -30,6 +30,7 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
                   <span className="sr-only">ミッション</span>
                 </h3>
                 <p className="whitespace-pre-line">{missions[levelIndex][stepIndex]}</p>
+                <p className="text-sm font-bold text-gray-400 mt-3">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
               </div>
             )}
             {cardState === 1 && (
@@ -39,8 +40,9 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
                   <p>{explainsAtCorrected[levelIndex][stepIndex]}</p>
                 </div>
                 <div className="flex flex-col items-center space-y-5">
-                  <h3 className="font-bold text-green-500 text-2xl">送信成功</h3>
+                  <h3 className="font-bold text-green-500 text-2xl">送信成功！</h3>
                   <p>{explainsAtCorrected[levelIndex][stepIndex]}</p>
+                  <FaCheckCircle className="size-[100px] text-green-600" />
                 </div>
               </>
             )}
@@ -53,15 +55,9 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
                 <div className="flex flex-col items-center space-y-5">
                   <h3 className="font-bold text-red-500 text-2xl">送信失敗</h3>
                   <p>{errorMessages[levelIndex][stepIndex]}</p>
+                  <FaWindowClose />
                 </div>
               </>
-            )}          
-            <p className="text-xs font-bold text-gray-400 mt-8">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
-            {cardState === 1 && (
-              <FaCheckCircle className="size-[100px]" />
-            )}
-            {cardState === -1 && (
-              <FaWindowClose />
             )}
           </div>
         </div>
