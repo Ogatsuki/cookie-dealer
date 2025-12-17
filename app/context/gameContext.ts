@@ -14,7 +14,7 @@ export const explains = [
   "CSRF（クロスサイト・リクエスト・フォージェリ）などの攻撃を防ぐため、現代のブラウザは `SameSite` 属性を重要視します。\n\n`Strict`, `Lax`, `None` の違いと、それぞれがどのようなシチュエーションで送信されるかを学びます。"
 ];
 
-export const detail = [
+export const details = [
   // Level 1: ドメインの一致
   [
     [
@@ -265,8 +265,19 @@ export const explainsAtCorrected = [
 ]
 
 
-export const isLevelChanged = ({currentLevel, currentStep, movingDirection}: {currentLevel: number, currentStep: number, movingDirection: "forward" | "backward"}) => {
-  if (movingDirection === "forward") {
-    
+export const updatePosition = (
+  levelIndex: number,
+  stepIndex: number,
+  movingDirection: "forward" | "backward",
+  setStepIndex: React.Dispatch<React.SetStateAction<number>>,
+  setLevelIndex: React.Dispatch<React.SetStateAction<number>>
+): void => {
+  const movingDirectionNum: number = movingDirection === "forward" ? 1 : -1;
+  const doesChangeLevel = details[levelIndex][stepIndex + movingDirectionNum] ? false : true;
+  if (!doesChangeLevel) {
+    setStepIndex(stepIndex + movingDirectionNum);
+  }
+  else{
+    setLevelIndex(levelIndex + movingDirectionNum); 
   }
 }

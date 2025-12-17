@@ -6,6 +6,8 @@ import Preview from "./(components)/preview";
 import Options from "./(components)/options";
 import Buttons from "./(components)/buttons";
 import { useState, useEffect } from "react";
+import { updatePosition } from './context/gameContext';
+
 
 
 
@@ -16,7 +18,9 @@ export default function Home() {
   const [movingDirection, setMovingDirection] = useState<"forward" | "backward" | null>(null);
 
   useEffect(() => {
-
+    if (movingDirection !== null) {
+      updatePosition(levelIndex, stepIndex, movingDirection, setStepIndex, setLevelIndex);
+    }
   }, [movingDirection])
 
   return (
@@ -26,7 +30,7 @@ export default function Home() {
         <MoreInfo levelIndex={levelIndex} stepIndex={stepIndex} />
         <Preview levelIndex={levelIndex} stepIndex={stepIndex} />
         <Options levelIndex={levelIndex} stepIndex={stepIndex} />
-        <Buttons levelIndex={levelIndex} stepIndex={stepIndex} movingDirection={movingDirection} />
+        <Buttons levelIndex={levelIndex} stepIndex={stepIndex} setMovingDirection={setMovingDirection} />
       </div>
     </div>
   );

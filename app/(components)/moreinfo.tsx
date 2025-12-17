@@ -1,5 +1,5 @@
 import type { t__Props } from '../type.js'
-import { detail } from '../context/gameContext.js'
+import { details } from '../context/gameContext';
 
 
 const MoreInfo: React.FC<t__Props> = ({levelIndex, stepIndex}) => {
@@ -8,7 +8,7 @@ const MoreInfo: React.FC<t__Props> = ({levelIndex, stepIndex}) => {
       <h2 className="sr-only">詳細情報</h2>
       <details>
         <summary className=''>技術詳細を見る</summary>
-        <p>{detail[levelIndex][stepIndex]}</p>
+        <p>{details[levelIndex][stepIndex]}</p>
       </details>
     </section>
   )
