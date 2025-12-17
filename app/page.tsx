@@ -9,9 +9,6 @@ import { useState, useEffect } from "react";
 import { updatePosition } from './context/gameContext';
 
 
-
-
-
 export default function Home() {
   const [levelIndex, setLevelIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
@@ -20,6 +17,7 @@ export default function Home() {
   useEffect(() => {
     if (movingDirection !== null) {
       updatePosition(levelIndex, stepIndex, movingDirection, setStepIndex, setLevelIndex);
+      setMovingDirection(null);
     }
   }, [movingDirection])
 
