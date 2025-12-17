@@ -1,5 +1,5 @@
 import type { t__Props } from "../type";
-import { explains, explains_title } from "../context/gameContext";
+import { explains, explains_title } from "../../utils/context/gameContext";
 
 
 

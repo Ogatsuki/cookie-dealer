@@ -1,8 +1,13 @@
-import type { t__Props } from "../type";
-import { urls, missions, errorMessages } from "../context/gameContext";
+import { urls, missions, errorMessages, explainsAtCorrected } from "../../utils/context/gameContext";
+
+type t__prevProps = {
+  levelIndex: number;
+  stepIndex: number;
+  cardState: number;
+}
 
 
-const Preview: React.FC<t__Props> = ({levelIndex, stepIndex}) => {
+const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => {
   return (
     <section className="mt-10 shadow-md text-white rounded-lg overflow-hidden aspect-video">
       <h2 className="sr-only">プレビュー画面</h2>
@@ -13,17 +18,43 @@ const Preview: React.FC<t__Props> = ({levelIndex, stepIndex}) => {
             <p className="flex-1 font-bold"><span className="text-gray-400">https:// </span>{urls[levelIndex][stepIndex]}</p>
           </div>
         </div>
-        <div className="bg-slate-900/80 flex-1 flex flex-col justify-start items-center px-[25%]">
-          <h3 className="text-blue-400 font-bold text-2xl mt-24">
-            <span aria-hidden="true">Mission</span>
-            <span className="sr-only">ミッション</span>
-          </h3>
-          <p className="whitespace-pre-line mt-5">{missions[levelIndex][stepIndex]}</p>
-          <p className="text-xs font-bold text-gray-400 mt-8">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
-        </div>
-        <div className="sr-only">
-          <h3>送信失敗</h3>
-          <p>{errorMessages[levelIndex][stepIndex]}</p>
+        <div className="bg-slate-900/80 flex-1 flex flex-col px-[20%] before:content-[''] before:block before:flex-7 after:content-[''] after:block after:flex-10">
+          <div className="flex flex-col items-center">
+            {cardState === 0 && (
+              <div className="flex flex-col items-center space-y-5">
+                <h3 className="text-blue-400 font-bold text-2xl">
+                  <span aria-hidden="true">Mission</span>
+                  <span className="sr-only">ミッション</span>
+                </h3>
+                <p className="whitespace-pre-line">{missions[levelIndex][stepIndex]}</p>
+              </div>
+            )}
+            {cardState === 1 && (
+              <>
+                <div className="sr-only">
+                  <h3>送信成功</h3>
+                  <p>{explainsAtCorrected[levelIndex][stepIndex]}</p>
+                </div>
+                <div className="flex flex-col items-center space-y-5">
+                  <h3 className="font-bold text-green-500 text-2xl">送信成功</h3>
+                  <p>{explainsAtCorrected[levelIndex][stepIndex]}</p>
+                </div>
+              </>
+            )}
+            {cardState === -1 && (
+              <>
+                <div className="sr-only">
+                  <h3>送信失敗</h3>
+                  <p>{errorMessages[levelIndex][stepIndex]}</p>
+                </div>
+                <div className="flex flex-col items-center space-y-5">
+                  <h3 className="font-bold text-red-500 text-2xl">送信失敗</h3>
+                  <p>{errorMessages[levelIndex][stepIndex]}</p>
+                </div>
+              </>
+            )}          
+            <p className="text-xs font-bold text-gray-400 mt-8">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
+          </div>
         </div>
       </div>
     </section>

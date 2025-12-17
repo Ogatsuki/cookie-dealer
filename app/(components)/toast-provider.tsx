@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const ToastCard = ({ isSuccess, message, toastFadeOut }: {isSuccess: boolean, message: string, toastFadeOut: boolean}) => {
   return (
-    <div className={`fixed bottom-15 right-3 rounded-l-xl shadow-lg ${isSuccess ? 'bg-[#58904d]' : 'bg-[#cf3636]'} ${toastFadeOut? 'opacity-0' : 'opacity-100'} transition-opacity duration-2000 ease-in`}>
+    <div className={`fixed bottom-15 right-3 rounded-l-xl shadow-lg ${isSuccess ? 'bg-[#58904d]' : 'bg-[#cf3636]'} ${toastFadeOut? 'opacity-0' : 'opacity-100'} transition-opacity duration-1000 ease-in`}>
       <p className='text-white py-5 pl-6 pr-13'>{message}</p>
     </div>
   )
@@ -47,8 +47,8 @@ export const ToastProvider = () => {
           setSignOutState(prev => ({...prev, isQueryExists: false}));
           setSignInState(prev => ({...prev, isQueryExists: false}));
           setToastFadeOut(false);
-        }, 2500);
-      }, 4000);
+        }, 1000);
+      }, 2500);
     }
   }, [searchParams, router])
 

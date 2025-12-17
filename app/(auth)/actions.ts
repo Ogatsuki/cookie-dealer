@@ -4,8 +4,15 @@ import { createClient } from '../../utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 export type responseState = {
-  success: boolean,
-  error: string | null
+  success: boolean;
+  error: string | null;
+}
+
+export type t__responseState = {
+  isCorrect: boolean;
+  error: string | null;
+  // flapping: false = 回答前。 true = 回答後。
+  flapping: boolean;
 }
 
 
@@ -25,7 +32,7 @@ const signIn = async (_prevResponseState: responseState, formData: FormData) => 
     return { success: false, error: error.message };
   }
 
-  redirect('/?signIn=true');
+  redirect('/?signin=true');
 }
 
 
@@ -65,6 +72,39 @@ const signOut = async (_prevResponseState: responseState,) => {
   redirect('/?signout=true');
 }
 
+const checking_answers = async(prevRes: t__responseState, formData: FormData) => {
+  console.log('level:', Number(formData.get('levelIndex')) + 1);
+  console.log('step:', Number(formData.get('stepIndex')) + 1);
+
+  const selectedOptionIndex = formData.get('selectedOptionIndex');
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('answers')
+    .select('correct_answer_index')
+    .eq('level', Number(formData.get('levelIndex')) + 1)
+    .eq('step', Number(formData.get('stepIndex')) + 1)
+    .single();
+
+    if (error) {
+      console.log('Error fetching correct answer:', error);
+      return { isCorrect: false, error: error.message, flapping: false };
+    }
+    else if (!data) {
+      console.log('Error fetching no data');
+      return { isCorrect: false, error: 'No data found', flapping: false };
+    }
+    else if (data.correct_answer_index === Number(selectedOptionIndex)) {
+      return { isCorrect: true, error: null, flapping: true };
+    }
+    else if (data.correct_answer_index !== Number(selectedOptionIndex)) {
+      return { isCorrect: false, error: null, flapping: true };
+    }
+    else {
+      return { isCorrect: false, error: 'Unknown error', flapping: false };
+    }
+
+}
 
 
-export { signIn, signUp, signOut }
+
+export { signIn, signUp, signOut, checking_answers };

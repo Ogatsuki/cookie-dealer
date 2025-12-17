@@ -13,7 +13,7 @@ export default function RegisterPage() {
   const [ password, setPassword ] = useState('');
 
   return (
-    <div className='flex flex-col w-100 h-130'>
+    <div className='flex flex-col w-100'>
       <div className="flex flex-col items-center gap-4 py-4">
         <h2 className="text-3xl font-bold text-gray-700 tracking-wider">会員登録</h2>
         {formState.error && (

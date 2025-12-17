@@ -1,5 +1,5 @@
 import type { t__Props } from '../type.js'
-import { details } from '../context/gameContext';
+import { details } from '../../utils/context/gameContext';
 
 
 const MoreInfo: React.FC<t__Props> = ({levelIndex, stepIndex}) => {

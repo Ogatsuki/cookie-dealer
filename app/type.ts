@@ -6,5 +6,5 @@ export type t__Props = {
 export type t__PropChildren = {
   levelIndex: number;
   stepIndex: number;
-  i_option: number;
+  optionIndex: number;
 }
