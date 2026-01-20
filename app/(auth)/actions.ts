@@ -11,6 +11,7 @@ export type t__responseState_auth = {
 export type t__responseState_answerCheck = {
   isCorrect: boolean | null;
   error: string | null;
+  timeStamp: number | null;
 }
 
 
@@ -71,34 +72,34 @@ const signOut = async (_prevResponseState: t__responseState_auth,) => {
 }
 
 const checking_answers = async(prevRes: t__responseState_answerCheck, formData: FormData) => {
-  console.log('level:', Number(formData.get('levelIndex')) + 1);
-  console.log('step:', Number(formData.get('stepIndex')) + 1);
-
-  const selectedOptionIndex = formData.get('selectedOptionIndex');
+  const selectedOptionIndex = Number(formData.get('selectedOptionIndex'));
+  const level = Number(formData.get('levelIndex')) + 1;
+  const step = Number(formData.get('stepIndex')) + 1;
   const supabase = await createClient();
+  const timeStamp = Date.now();
   const { data, error } = await supabase
     .from('answers')
     .select('correct_answer_index')
-    .eq('level', Number(formData.get('levelIndex')) + 1)
-    .eq('step', Number(formData.get('stepIndex')) + 1)
+    .eq('level', level)
+    .eq('step', step)
     .single();
 
     if (error) {
       console.log('Error fetching correct answer:', error);
-      return { isCorrect: false, error: error.message };
+      return { isCorrect: false, error: error.message, timeStamp: timeStamp };
     }
     else if (!data) {
       console.log('Error fetching no data');
-      return { isCorrect: false, error: 'No data found' };
+      return { isCorrect: false, error: 'No data found', timeStamp: timeStamp };
     }
-    else if (data.correct_answer_index === Number(selectedOptionIndex)) {
-      return { isCorrect: true, error: null };
+    else if (data.correct_answer_index === selectedOptionIndex) {
+      return { isCorrect: true, error: null, timeStamp: timeStamp };
     }
-    else if (data.correct_answer_index !== Number(selectedOptionIndex)) {
-      return { isCorrect: false, error: null };
+    else if (data.correct_answer_index !== selectedOptionIndex) {
+      return { isCorrect: false, error: null, timeStamp: timeStamp };
     }
     else {
-      return { isCorrect: null, error: 'Unknown error at checking answers' };
+      return { isCorrect: null, error: 'Unknown error at checking answers', timeStamp: timeStamp };
     }
 
 }

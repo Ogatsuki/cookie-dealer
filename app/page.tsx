@@ -13,10 +13,11 @@ export default function Home() {
   const [stepIndex, setStepIndex] = useState(0);
   const [isNextStep, setIsNextStep] = useState<boolean | null>(null);
   const [previewState, setPreviewState] = useState<number>(0);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (isNextStep !== null) {
-      updatePosition(levelIndex, stepIndex, isNextStep, setStepIndex, setLevelIndex);
+      updatePosition(levelIndex, stepIndex, isNextStep, setStepIndex, setLevelIndex, setIsNextStep);
     }
   }, [isNextStep])
 
@@ -26,7 +27,16 @@ export default function Home() {
         <Explains levelIndex={levelIndex} stepIndex={stepIndex} />
         <MoreInfo levelIndex={levelIndex} stepIndex={stepIndex} />
         <Preview levelIndex={levelIndex} stepIndex={stepIndex} previewState={previewState} />
-        <Choices levelIndex={levelIndex} stepIndex={stepIndex} setIsNextStep={setIsNextStep} setPreviewState={setPreviewState} />
+        <Choices
+          levelIndex={levelIndex}
+          stepIndex={stepIndex}
+          setLevelIndex={setLevelIndex}
+          setStepIndex={setStepIndex}
+          setIsNextStep={setIsNextStep}
+          setPreviewState={setPreviewState}
+          selectedOptionIndex={selectedOptionIndex}
+          setSelectedOptionIndex={setSelectedOptionIndex}
+          />
       </div>
     </div>
   );

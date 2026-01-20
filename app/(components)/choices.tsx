@@ -2,15 +2,19 @@
 
 import { Fragment, useState, useEffect, useActionState } from "react";
 import type { t__PropChildren } from "../type";
-import { optionValues, errorMessages, explainsAtCorrected } from "../../utils/context/gameContext";
+import { optionValues } from "../../utils/context/gameContext";
 import { optionKeys } from "../../utils/context/gameContext";
 import { checking_answers, type t__responseState_answerCheck } from "../(auth)/actions";
 
 type ChoicesProps = {
   levelIndex: number;
   stepIndex: number;
+  setLevelIndex: React.Dispatch<React.SetStateAction<number>>;
+  setStepIndex: React.Dispatch<React.SetStateAction<number>>;
   setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>;
   setPreviewState: React.Dispatch<React.SetStateAction<number>>;
+  selectedOptionIndex: number | null;
+  setSelectedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 
@@ -29,27 +33,36 @@ const SetOptionValues: React.FC<t__PropChildren> = ({levelIndex, stepIndex, opti
 }
 
 
-export default function Choices({ levelIndex, stepIndex, setIsNextStep, setPreviewState }: ChoicesProps) {
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
-  const initialResponse: t__responseState_answerCheck = { isCorrect: null, error: null };
-  const [response, action, isPending] = useActionState(checking_answers, initialResponse)
+export default function Choices({ levelIndex, stepIndex, setLevelIndex, setStepIndex, setIsNextStep, setPreviewState, selectedOptionIndex, setSelectedOptionIndex }: ChoicesProps) {
+  const initialResponse: t__responseState_answerCheck = { isCorrect: null, error: null, timeStamp: null };
+  const [response, action] = useActionState(checking_answers, initialResponse)
 
   // step遷移のボタンが押されたらisCorrect, errorをリセット（nullにする）
   const whenNextStepPushed = () => {
     setIsNextStep(true);
     setPreviewState(0);
+    setSelectedOptionIndex(null);
   }
   const whenPrevStepPushed = () => {
     setIsNextStep(false);
     setPreviewState(0);
+    setSelectedOptionIndex(null);
+  }
+  const whenFirstPushed = () => {
+    setLevelIndex(0);
+    setStepIndex(0);
+  }
+  const whenLastPushed = () => {
+    setLevelIndex(optionValues.length - 1);
+    setStepIndex(optionValues[optionValues.length - 1].length - 1);
   }
 
   useEffect(() => {
-    if (isPending === false) {
+    if (response.timeStamp !== null) {
       // 正解の取得後、クリーンの正解・不正解の表示をあわせてきりかえる
       setPreviewState(response.isCorrect ? 1 : -1);
     }
-  }, [isPending])
+  }, [response.isCorrect, response.timeStamp, setPreviewState]);
 
   return (
     <>
@@ -59,17 +72,17 @@ export default function Choices({ levelIndex, stepIndex, setIsNextStep, setPrevi
           {optionValues[levelIndex][stepIndex].map((_, i) => {
             return (
               <Fragment key={i}>
-                <div className={`rounded-md px-5 py-5 w-[300px] h-fit shadow-lg ring-1 hover:shadow-lg transition-all duration-100 ${selectedOptionIndex === i ? "ring-4 shadow-lg" : ""}` +
-                  (i == 0 ? ` bg-lime-100/50 ring-lime-200` : "") +
-                  (i == 1 ? ` bg-blue-100/50 ring-blue-200` : "") +
-                  (i == 2 ? ` bg-purple-100/50 ring-purple-200` : "") +
-                  (i == 3 ? ` bg-red-100/50 ring-red-200` : "") +
-                  (i == 4 ? ` bg-indigo-100/50 ring-indigo-200` : "") +
-                  (i == 5 ? ` bg-light-blue-100/50 ring-light-blue-200` : "") +
-                  (i == 6 ? ` bg-cyan-100/50 ring-cyan-200` : "") +
-                  (i == 7 ? ` bg-teal-100/50 ring-teal-200` : "") +
-                  (i == 8 ? ` bg-green-100/50 ring-green-200` : "")
-                } onClick={() => setSelectedOptionIndex(i)}>
+                <div className={`w-full hover:cursor-pointer rounded-md px-5 py-5 min-w-[220px] h-fit shadow-md ring-1 transition-all duration-100 ${selectedOptionIndex === i ? "ring-4" : ""}` +
+                  (i == 0 ? ` bg-lime-100/50 ring-lime-400` : "") +
+                  (i == 1 ? ` bg-blue-100/50 ring-blue-400` : "") +
+                  (i == 2 ? ` bg-purple-100/50 ring-purple-400` : "") +
+                  (i == 3 ? ` bg-red-100/50 ring-red-400` : "") +
+                  (i == 4 ? ` bg-indigo-100/50 ring-indigo-400` : "") +
+                  (i == 5 ? ` bg-sky-100/50 ring-sky-400` : "") +
+                  (i == 6 ? ` bg-cyan-100/50 ring-cyan-400` : "") +
+                  (i == 7 ? ` bg-teal-100/50 ring-teal-400` : "") +
+                  (i == 8 ? ` bg-green-100/50 ring-green-400` : "")
+                } onClick={() => setSelectedOptionIndex(i)} >
                   <dl>
                     <SetOptionValues levelIndex={levelIndex} stepIndex={stepIndex} optionIndex={i} />
                   </dl>
@@ -78,15 +91,19 @@ export default function Choices({ levelIndex, stepIndex, setIsNextStep, setPrevi
             )
           })}
         </div>
-        <form action={action} className="my-16 flex justify-center items-center gap-16">
-          <input type="hidden" name='selectedOptionIndex' value={selectedOptionIndex != null ? selectedOptionIndex : ""} />
-          <input type="hidden" name='levelIndex' value={levelIndex} />
-          <input type="hidden" name='stepIndex' value={stepIndex} />
-          <button type="button" className="text-[15px] font-bold text-gray-600" onClick={whenPrevStepPushed}>前のステップへ</button>
-          <button type="submit" disabled={selectedOptionIndex === null} className={`px-5 py-3 bg-blue-700/85 text-white rounded-md font-bold hover:shadow-md ${selectedOptionIndex === null ? "bg-gray-700" : ""}`}>サーバーに送信</button>
-          <button type="button" className="text-[15px] font-bold text-gray-600" onClick={whenNextStepPushed}>次のステップへ</button>
-        </form>
       </section>
+      <form className="mt-10 mb-16" action={action}>
+        <input type="hidden" name='selectedOptionIndex' value={String(selectedOptionIndex)} />
+        <input type="hidden" name='levelIndex' value={levelIndex} />
+        <input type="hidden" name='stepIndex' value={stepIndex} />
+        <div className="flex justify-center items-center gap-8">
+          <button type='button' className={`hover:cursor-pointer flex text-gray-400 ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenFirstPushed}><span className="block rotate-270 text-2xl">▲</span><span className="block rotate-270 text-2xl">▲</span></button>
+          <button type="button" className={`hover:cursor-pointer text-gray-400 rotate-270 text-2xl ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenPrevStepPushed}>▲</button>
+          <button type="submit" disabled={selectedOptionIndex === null} className={`hover:cursor-pointer px-5 py-3 bg-blue-700 text-white rounded-md font-bold hover:shadow-md ${selectedOptionIndex === null ? "bg-gray-700" : ""}`}>cookie送信</button>
+          <button type="button" className={`hover:cursor-pointer text-gray-400 rotate-90 text-2xl ${levelIndex === optionValues.length - 1 && stepIndex === optionValues[levelIndex].length - 1 ? 'invisible' : ''}`} onClick={whenNextStepPushed}>▲</button>
+          <button type='button' className={`hover:cursor-pointer flex text-gray-400 ${levelIndex === optionValues.length - 1 && stepIndex === optionValues[levelIndex].length - 1 ? 'invisible' : ''}`} onClick={whenLastPushed}><span className="block rotate-90 text-2xl">▲</span><span className="block rotate-90 text-2xl">▲</span></button>
+        </div>
+      </form>
     </>
   )
 }

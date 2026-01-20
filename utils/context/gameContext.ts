@@ -292,28 +292,29 @@ export const updatePosition = (
   stepIndex: number,
   isNextStep: boolean,
   setStepIndex: React.Dispatch<React.SetStateAction<number>>,
-  setLevelIndex: React.Dispatch<React.SetStateAction<number>>
+  setLevelIndex: React.Dispatch<React.SetStateAction<number>>,
+  setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>
 ): void => {
+  console.log('a');
   const num_next: number = isNextStep === true ? 1 : -1;
-  const isLevelChange = details[levelIndex][stepIndex + num_next] ? false : true;
+  // changeする場合は+-1. しない場合は0
+  const levelChange = details[levelIndex][stepIndex + num_next] ? 0 : num_next;
+  const stepChange = details[levelIndex][stepIndex + num_next] ? num_next : 0;
+  // すでに最下層、最上層かどうかを判定
+  const isUndergrand = (levelIndex === 0 && stepIndex === 0 && isNextStep === false) ? true : false;
+  const isAboveSky = (levelIndex === details.length -1 && stepIndex === details[levelIndex].length -1 && isNextStep === true) ? true : false;
 
-  if (!isLevelChange) {
-    setStepIndex(stepIndex + num_next);
+  if (isUndergrand || isAboveSky) {
+    console.log(isUndergrand ? "already at the first step of the first level" : "already at the last step of the last level");
   }
-  else{
-    setLevelIndex(levelIndex + num_next);
+  // stepChangeを実行。change有効ならその時点でreturn
+  else if (stepChange !== 0) {
+    setStepIndex(stepIndex + stepChange);
+  }
+  else if (levelChange != 0) {
+    setLevelIndex(levelIndex + levelChange);
+    setStepIndex(levelChange === 1 ? 0 : details[levelIndex - 1].length - 1);
+  }
 
-    if (isNextStep === false && levelIndex > 0) {
-      setStepIndex(details[levelIndex -1].length - 1);
-    } 
-    else if (isNextStep === false && levelIndex == 0) {
-      throw new Error("cannot go to previous level");
-    }
-    else if (isNextStep === true) {
-      setStepIndex(0);
-    }
-    else {
-      throw new Error("invalid state on changing level");
-    }
-  }
+  setIsNextStep(null);
 }
