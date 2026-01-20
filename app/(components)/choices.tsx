@@ -4,13 +4,13 @@ import { Fragment, useState, useEffect, useActionState } from "react";
 import type { t__PropChildren } from "../type";
 import { optionValues, errorMessages, explainsAtCorrected } from "../../utils/context/gameContext";
 import { optionKeys } from "../../utils/context/gameContext";
-import { checking_answers, type t__responseState } from "../(auth)/actions";
+import { checking_answers, type t__responseState_answerCheck } from "../(auth)/actions";
 
 type ChoicesProps = {
   levelIndex: number;
   stepIndex: number;
-  setMovingDirection: React.Dispatch<React.SetStateAction<"forward" | "backward" | null>>;
-  setCardState: React.Dispatch<React.SetStateAction<number>>;
+  setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setPreviewState: React.Dispatch<React.SetStateAction<number>>;
 }
 
 
@@ -29,17 +29,27 @@ const SetOptionValues: React.FC<t__PropChildren> = ({levelIndex, stepIndex, opti
 }
 
 
-export default function Choices({ levelIndex, stepIndex, setMovingDirection, setCardState }: ChoicesProps) {
+export default function Choices({ levelIndex, stepIndex, setIsNextStep, setPreviewState }: ChoicesProps) {
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
-  const initialResponse: t__responseState = { isCorrect: false, error: null, flapping: false };
+  const initialResponse: t__responseState_answerCheck = { isCorrect: null, error: null };
   const [response, action, isPending] = useActionState(checking_answers, initialResponse)
 
+  // step遷移のボタンが押されたらisCorrect, errorをリセット（nullにする）
+  const whenNextStepPushed = () => {
+    setIsNextStep(true);
+    setPreviewState(0);
+  }
+  const whenPrevStepPushed = () => {
+    setIsNextStep(false);
+    setPreviewState(0);
+  }
+
   useEffect(() => {
-    if (response.flapping) {
-      setCardState(response.isCorrect ? 1 : -1);
-      console.log('回答が送信されました:', response.isCorrect);
+    if (isPending === false) {
+      // 正解の取得後、クリーンの正解・不正解の表示をあわせてきりかえる
+      setPreviewState(response.isCorrect ? 1 : -1);
     }
-  }, [response.flapping])
+  }, [isPending])
 
   return (
     <>
@@ -72,9 +82,9 @@ export default function Choices({ levelIndex, stepIndex, setMovingDirection, set
           <input type="hidden" name='selectedOptionIndex' value={selectedOptionIndex != null ? selectedOptionIndex : ""} />
           <input type="hidden" name='levelIndex' value={levelIndex} />
           <input type="hidden" name='stepIndex' value={stepIndex} />
-          <button type="button" className="text-[15px] font-bold text-gray-600" onClick={() => setMovingDirection("backward")}>前のステップへ</button>
+          <button type="button" className="text-[15px] font-bold text-gray-600" onClick={whenPrevStepPushed}>前のステップへ</button>
           <button type="submit" disabled={selectedOptionIndex === null} className={`px-5 py-3 bg-blue-700/85 text-white rounded-md font-bold hover:shadow-md ${selectedOptionIndex === null ? "bg-gray-700" : ""}`}>サーバーに送信</button>
-          <button type="button" className="text-[15px] font-bold text-gray-600" onClick={() => setMovingDirection("forward")}>次のステップへ</button>
+          <button type="button" className="text-[15px] font-bold text-gray-600" onClick={whenNextStepPushed}>次のステップへ</button>
         </form>
       </section>
     </>

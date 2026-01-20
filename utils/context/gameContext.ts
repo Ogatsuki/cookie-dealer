@@ -290,26 +290,30 @@ export const explainsAtCorrected = [
 export const updatePosition = (
   levelIndex: number,
   stepIndex: number,
-  movingDirection: "forward" | "backward",
+  isNextStep: boolean,
   setStepIndex: React.Dispatch<React.SetStateAction<number>>,
   setLevelIndex: React.Dispatch<React.SetStateAction<number>>
 ): void => {
-  const movingDirectionNum: number = movingDirection === "forward" ? 1 : -1;
-  const doesChangeLevel = details[levelIndex][stepIndex + movingDirectionNum] ? false : true;
+  const num_next: number = isNextStep === true ? 1 : -1;
+  const isLevelChange = details[levelIndex][stepIndex + num_next] ? false : true;
 
-  if (!doesChangeLevel) {
-    setStepIndex(stepIndex + movingDirectionNum);
+  if (!isLevelChange) {
+    setStepIndex(stepIndex + num_next);
   }
   else{
-    setLevelIndex(levelIndex + movingDirectionNum);
+    setLevelIndex(levelIndex + num_next);
 
-    if (movingDirection === "backward") {
-      if (!details[levelIndex -1]) return;
-      const nextStep = details[levelIndex -1].length - 1
-      setStepIndex(nextStep);
+    if (isNextStep === false && levelIndex > 0) {
+      setStepIndex(details[levelIndex -1].length - 1);
     } 
-    else {
+    else if (isNextStep === false && levelIndex == 0) {
+      throw new Error("cannot go to previous level");
+    }
+    else if (isNextStep === true) {
       setStepIndex(0);
+    }
+    else {
+      throw new Error("invalid state on changing level");
     }
   }
 }

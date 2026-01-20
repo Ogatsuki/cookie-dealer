@@ -3,11 +3,11 @@
 import Link from "next/link"
 import { signUp } from '../actions';
 import { useActionState, useState } from 'react';
-import type { responseState } from '../actions';
+import type { t__responseState_auth } from '../actions';
 
 
 export default function RegisterPage() {  
-  const initialState: responseState = {success: false, error: null};
+  const initialState: t__responseState_auth = {success: false, error: null};
   const [ formState, formAction, isPending ] = useActionState(signUp, initialState);
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');

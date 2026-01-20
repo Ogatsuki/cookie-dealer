@@ -6,11 +6,11 @@ import { FaWindowClose } from "react-icons/fa";
 type t__prevProps = {
   levelIndex: number;
   stepIndex: number;
-  cardState: number;
+  previewState: number;
 }
 
 
-const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => {
+const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) => {
   return (
     <section className="mt-10 shadow-md text-white rounded-lg overflow-hidden aspect-video">
       <h2 className="sr-only">プレビュー画面</h2>
@@ -21,9 +21,9 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
             <p className="flex-1 font-bold flex"><FaLock className="mr-3 font-medium text-gray-100" /><span className="text-gray-400 whitespace-pre">https:// </span>{urls[levelIndex][stepIndex]}</p>
           </div>
         </div>
-        <div className={`flex-1 flex flex-col px-[20%] before:content-[''] before:block before:flex-7 after:content-[''] after:block after:flex-10 ${cardState === 0 ? 'bg-slate-900/80' : ''} ${cardState === 1 ? 'bg-slate-900/60' : ''} ${cardState === -1 ? 'bg-slate-900/60' : ''}`}>
+        <div className={`flex-1 flex flex-col px-[20%] before:content-[''] before:block before:flex-7 after:content-[''] after:block after:flex-10 ${previewState === 0 ? 'bg-slate-900/80' : ''} ${previewState === 1 ? 'bg-slate-900/60' : ''} ${previewState === -1 ? 'bg-slate-900/60' : ''}`}>
           <div className="flex flex-col items-center">
-            {cardState === 0 && (
+            {previewState === 0 && (
               <div className="flex flex-col items-center space-y-5">
                 <h3 className="text-blue-400 font-bold text-2xl">
                   <span aria-hidden="true">Mission</span>
@@ -33,7 +33,7 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
                 <p className="text-sm font-bold text-gray-400 mt-3">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
               </div>
             )}
-            {cardState === 1 && (
+            {previewState === 1 && (
               <>
                 <div className="sr-only">
                   <h3>送信成功</h3>
@@ -46,7 +46,7 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, cardState}) => 
                 </div>
               </>
             )}
-            {cardState === -1 && (
+            {previewState === -1 && (
               <>
                 <div className="sr-only">
                   <h3>送信失敗</h3>

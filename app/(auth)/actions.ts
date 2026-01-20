@@ -3,21 +3,19 @@
 import { createClient } from '../../utils/supabase/server';
 import { redirect } from 'next/navigation';
 
-export type responseState = {
+export type t__responseState_auth = {
   success: boolean;
   error: string | null;
 }
 
-export type t__responseState = {
-  isCorrect: boolean;
+export type t__responseState_answerCheck = {
+  isCorrect: boolean | null;
   error: string | null;
-  // flapping: false = 回答前。 true = 回答後。
-  flapping: boolean;
 }
 
 
 
-const signIn = async (_prevResponseState: responseState, formData: FormData) => {
+const signIn = async (_prevResponseState: t__responseState_auth, formData: FormData) => {
   const supabase = await createClient();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -37,7 +35,7 @@ const signIn = async (_prevResponseState: responseState, formData: FormData) => 
 
 
 
-const signUp = async (_prevResponseState: responseState, formData: FormData) => {
+const signUp = async (_prevResponseState: t__responseState_auth, formData: FormData) => {
   const supabase = await createClient();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -60,7 +58,7 @@ const signUp = async (_prevResponseState: responseState, formData: FormData) => 
   redirect('/?signup=true');
 }
 
-const signOut = async (_prevResponseState: responseState,) => {
+const signOut = async (_prevResponseState: t__responseState_auth,) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
 
@@ -72,7 +70,7 @@ const signOut = async (_prevResponseState: responseState,) => {
   redirect('/?signout=true');
 }
 
-const checking_answers = async(prevRes: t__responseState, formData: FormData) => {
+const checking_answers = async(prevRes: t__responseState_answerCheck, formData: FormData) => {
   console.log('level:', Number(formData.get('levelIndex')) + 1);
   console.log('step:', Number(formData.get('stepIndex')) + 1);
 
@@ -87,20 +85,20 @@ const checking_answers = async(prevRes: t__responseState, formData: FormData) =>
 
     if (error) {
       console.log('Error fetching correct answer:', error);
-      return { isCorrect: false, error: error.message, flapping: false };
+      return { isCorrect: false, error: error.message };
     }
     else if (!data) {
       console.log('Error fetching no data');
-      return { isCorrect: false, error: 'No data found', flapping: false };
+      return { isCorrect: false, error: 'No data found' };
     }
     else if (data.correct_answer_index === Number(selectedOptionIndex)) {
-      return { isCorrect: true, error: null, flapping: true };
+      return { isCorrect: true, error: null };
     }
     else if (data.correct_answer_index !== Number(selectedOptionIndex)) {
-      return { isCorrect: false, error: null, flapping: true };
+      return { isCorrect: false, error: null };
     }
     else {
-      return { isCorrect: false, error: 'Unknown error', flapping: false };
+      return { isCorrect: null, error: 'Unknown error at checking answers' };
     }
 
 }
