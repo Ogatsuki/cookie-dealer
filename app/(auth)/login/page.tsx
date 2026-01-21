@@ -25,11 +25,11 @@ export default function SignInPage() {
           <div className="flex flex-col space-y-5">
             <label className="flex flex-col space-y-2">
               <h3 className="tracking-wide">メールアドレス</h3>
-              <input value={email} onChange={e => setEmail(e.target.value)} name="email" type="email" className="border border-gray-300 rounded-md px-[10px] py-1"/>
+              <input value={email} onChange={e => setEmail(e.target.value)} name="email" type="email" className="border border-gray-300 rounded-md px-2.5 py-1"/>
             </label>
             <label className="flex flex-col space-y-2">
               <h3 className="tracking-wide">パスワード</h3>
-              <input value={password} onChange={e => setPassword(e.target.value)} name="password" type="text" className="border border-gray-300 rounded-md px-[10px] py-1"/>
+              <input value={password} onChange={e => setPassword(e.target.value)} name="password" type="text" className="border border-gray-300 rounded-md px-2.5 py-1"/>
             </label>
           </div>
           <div className="mt-16 flex-1 flex items-end">

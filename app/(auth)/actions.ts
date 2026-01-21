@@ -59,7 +59,7 @@ const signUp = async (_prevResponseState: t__responseState_auth, formData: FormD
   redirect('/?signup=true');
 }
 
-const signOut = async (_prevResponseState: t__responseState_auth,) => {
+const signOut = async () => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
 

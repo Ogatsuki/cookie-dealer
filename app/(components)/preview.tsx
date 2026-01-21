@@ -13,7 +13,7 @@ type t__prevProps = {
 
 const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) => {
   return (
-    <section className="mt-10 shadow-md text-white rounded-lg overflow-hidden">
+    <section className="mt-13 shadow-md text-white rounded-lg overflow-hidden">
       <h2 className="sr-only">プレビュー画面</h2>
       <div className="flex flex-col h-full">
         <div className="flex justify-center items-center align-center h-15 bg-slate-900">

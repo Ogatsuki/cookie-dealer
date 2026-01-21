@@ -19,7 +19,7 @@ export default function Home() {
     if (isNextStep !== null) {
       updatePosition(levelIndex, stepIndex, isNextStep, setStepIndex, setLevelIndex, setIsNextStep);
     }
-  }, [isNextStep])
+  }, [levelIndex, stepIndex, isNextStep, setIsNextStep, setStepIndex, setLevelIndex]);
 
   return (
     <div className="px-4 flex justify-center flex-1">

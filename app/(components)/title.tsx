@@ -33,8 +33,8 @@ export default function Title({ levelIndex, stepIndex, setLevelIndex, setStepInd
 
   return (
     <div className="flex flex-col items-center mt-18">
-      <h2 className="font-bold text-slate-900 flex gap-1 text-2xl tracking-wider">{explains_title[levelIndex]}</h2>
-      <div className="mt-3 flex text-slate-900/80 items-center">
+      <h2 className="font-bold text-slate-900 flex gap-1 text-3xl tracking-wider">{explains_title[levelIndex]}</h2>
+      <div className="mt-4 flex text-slate-900/80 items-center">
         <button type='button' className={`hover:cursor-pointer flex leading-none text-gray-400 translate-x-1 ${levelIndex === 0 ? 'invisible' : ''}`} onClick={whenFirstPushed}><span className="block rotate-270">▲</span><span className="block rotate-270">▲</span></button>
         <button type="button" className={`hover:cursor-pointer ml-3 leading-none text-gray-400 rotate-270 ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenPrevStepPushed}>▲</button>
         <div className="mx-5 text-slate-900 text-base flex whitespace-pre leading-none">
