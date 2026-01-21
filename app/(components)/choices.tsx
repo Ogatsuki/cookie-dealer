@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useState, useEffect, useActionState } from "react";
+import { Fragment, useEffect, useActionState } from "react";
 import type { t__PropChildren } from "../type";
 import { optionValues } from "../../utils/context/gameContext";
 import { optionKeys } from "../../utils/context/gameContext";
@@ -9,9 +9,8 @@ import { checking_answers, type t__responseState_answerCheck } from "../(auth)/a
 type ChoicesProps = {
   levelIndex: number;
   stepIndex: number;
-  setLevelIndex: React.Dispatch<React.SetStateAction<number>>;
-  setStepIndex: React.Dispatch<React.SetStateAction<number>>;
   setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>;
+  previewState: number;
   setPreviewState: React.Dispatch<React.SetStateAction<number>>;
   selectedOptionIndex: number | null;
   setSelectedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
@@ -33,29 +32,15 @@ const SetOptionValues: React.FC<t__PropChildren> = ({levelIndex, stepIndex, opti
 }
 
 
-export default function Choices({ levelIndex, stepIndex, setLevelIndex, setStepIndex, setIsNextStep, setPreviewState, selectedOptionIndex, setSelectedOptionIndex }: ChoicesProps) {
+export default function Choices({ levelIndex, stepIndex, setIsNextStep, previewState, setPreviewState, selectedOptionIndex, setSelectedOptionIndex }: ChoicesProps) {
   const initialResponse: t__responseState_answerCheck = { isCorrect: null, error: null, timeStamp: null };
   const [response, action] = useActionState(checking_answers, initialResponse)
+  const whenButtonPushed = () => {
+    setPreviewState(0);
+    setSelectedOptionIndex(null);
+  }
 
-  // step遷移のボタンが押されたらisCorrect, errorをリセット（nullにする）
-  const whenNextStepPushed = () => {
-    setIsNextStep(true);
-    setPreviewState(0);
-    setSelectedOptionIndex(null);
-  }
-  const whenPrevStepPushed = () => {
-    setIsNextStep(false);
-    setPreviewState(0);
-    setSelectedOptionIndex(null);
-  }
-  const whenFirstPushed = () => {
-    setLevelIndex(0);
-    setStepIndex(0);
-  }
-  const whenLastPushed = () => {
-    setLevelIndex(optionValues.length - 1);
-    setStepIndex(optionValues[optionValues.length - 1].length - 1);
-  }
+
 
   useEffect(() => {
     if (response.timeStamp !== null) {
@@ -66,7 +51,7 @@ export default function Choices({ levelIndex, stepIndex, setLevelIndex, setStepI
 
   return (
     <>
-      <section className="mt-10">
+      <section className="mt-8">
         <h2 className="sr-only">選択肢一覧</h2>
         <div className="grid grid-cols-3 gap-6">
           {optionValues[levelIndex][stepIndex].map((_, i) => {
@@ -97,11 +82,14 @@ export default function Choices({ levelIndex, stepIndex, setLevelIndex, setStepI
         <input type="hidden" name='levelIndex' value={levelIndex} />
         <input type="hidden" name='stepIndex' value={stepIndex} />
         <div className="flex justify-center items-center gap-8">
-          <button type='button' className={`hover:cursor-pointer flex text-gray-400 ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenFirstPushed}><span className="block rotate-270 text-2xl">▲</span><span className="block rotate-270 text-2xl">▲</span></button>
-          <button type="button" className={`hover:cursor-pointer text-gray-400 rotate-270 text-2xl ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenPrevStepPushed}>▲</button>
-          <button type="submit" disabled={selectedOptionIndex === null} className={`hover:cursor-pointer px-5 py-3 bg-blue-700 text-white rounded-md font-bold hover:shadow-md ${selectedOptionIndex === null ? "bg-gray-700" : ""}`}>cookie送信</button>
-          <button type="button" className={`hover:cursor-pointer text-gray-400 rotate-90 text-2xl ${levelIndex === optionValues.length - 1 && stepIndex === optionValues[levelIndex].length - 1 ? 'invisible' : ''}`} onClick={whenNextStepPushed}>▲</button>
-          <button type='button' className={`hover:cursor-pointer flex text-gray-400 ${levelIndex === optionValues.length - 1 && stepIndex === optionValues[levelIndex].length - 1 ? 'invisible' : ''}`} onClick={whenLastPushed}><span className="block rotate-90 text-2xl">▲</span><span className="block rotate-90 text-2xl">▲</span></button>
+        {previewState === 0 && <button type="submit" disabled={selectedOptionIndex === null} className={`px-8 py-5 bg-blue-700 text-white rounded-2xl font-bold tracking-widest hover:shadow-md ${selectedOptionIndex === null ? "bg-gray-500" : "hover:cursor-pointer"}`}>Cookie送信</button>}
+        {previewState === 1 && (
+          <div className="flex gap-6">
+            <button type='button' onClick={() => {setIsNextStep(true); whenButtonPushed()}} className="hover:cursor-pointer px-8 py-5 bg-green-600 text-white rounded-2xl font-bold hover:shadow-md">次に進む</button>
+            <button type='button' onClick={() => {setIsNextStep(null); whenButtonPushed()}} className="hover:cursor-pointer px-8 py-5 bg-orange-600 text-white rounded-2xl font-bold hover:shadow-md">やり直す</button>
+          </div>
+        )}
+        {previewState === -1 && <button type='button' onClick={() => {setIsNextStep(null); whenButtonPushed()}} className="hover:cursor-pointer px-8 py-5 bg-red-600 text-white rounded-2xl font-bold hover:shadow-md">やり直す</button>}
         </div>
       </form>
     </>

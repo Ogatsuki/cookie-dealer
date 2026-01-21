@@ -1,9 +1,9 @@
 'use client'
 
-import Explains from "./(components)/explains";
 import MoreInfo from "./(components)/moreinfo";
 import Preview from "./(components)/preview";
 import Choices from "./(components)/choices";
+import Title from "./(components)/title";
 import { useState, useEffect } from "react";
 import { updatePosition } from '../utils/context/gameContext';
 
@@ -22,17 +22,24 @@ export default function Home() {
   }, [isNextStep])
 
   return (
-    <div className="p-4 flex justify-center flex-1">
+    <div className="px-4 flex justify-center flex-1">
       <div className="w-full max-w-4xl flex flex-col">
-        <Explains levelIndex={levelIndex} stepIndex={stepIndex} />
-        <MoreInfo levelIndex={levelIndex} stepIndex={stepIndex} />
-        <Preview levelIndex={levelIndex} stepIndex={stepIndex} previewState={previewState} />
-        <Choices
+        <Title
           levelIndex={levelIndex}
           stepIndex={stepIndex}
           setLevelIndex={setLevelIndex}
           setStepIndex={setStepIndex}
           setIsNextStep={setIsNextStep}
+          setPreviewState={setPreviewState}
+          setSelectedOptionIndex={setSelectedOptionIndex}
+        />
+        <Preview levelIndex={levelIndex} stepIndex={stepIndex} previewState={previewState} />
+        <MoreInfo levelIndex={levelIndex} stepIndex={stepIndex} />
+        <Choices
+          levelIndex={levelIndex}
+          stepIndex={stepIndex}
+          setIsNextStep={setIsNextStep}
+          previewState={previewState}
           setPreviewState={setPreviewState}
           selectedOptionIndex={selectedOptionIndex}
           setSelectedOptionIndex={setSelectedOptionIndex}

@@ -1,11 +1,11 @@
 'use client'
 
 export const explains_title = [
-  "Level 1 : ドメインの一致",
-  "Level 2 : サブドメイン",
-  "Level 3 : 3rd Party Cookieと広告",
-  "Level 4 : プライバシーとCookie",
-  "Level 5 : SameSite属性"
+  "ドメインの一致",
+  "サブドメイン",
+  "3rd Party Cookieと広告",
+  "プライバシーとCookie",
+  "SameSite属性"
 ];
 
 export const explains = [
