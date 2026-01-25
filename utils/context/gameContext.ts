@@ -290,19 +290,18 @@ export const explainsAtCorrected = [
 export const updatePosition = (
   levelIndex: number,
   stepIndex: number,
-  isNextStep: boolean,
+  isNextStep: number,
   setStepIndex: React.Dispatch<React.SetStateAction<number>>,
   setLevelIndex: React.Dispatch<React.SetStateAction<number>>,
-  setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>
+  setIsNextStep: React.Dispatch<React.SetStateAction<number | null>>
 ): void => {
   console.log('a');
-  const num_next: number = isNextStep === true ? 1 : -1;
   // changeする場合は+-1. しない場合は0
-  const levelChange = details[levelIndex][stepIndex + num_next] ? 0 : num_next;
-  const stepChange = details[levelIndex][stepIndex + num_next] ? num_next : 0;
+  const levelChange = details[levelIndex][stepIndex + isNextStep] ? 0 : isNextStep;
+  const stepChange = details[levelIndex][stepIndex + isNextStep] ? isNextStep : 0;
   // すでに最下層、最上層かどうかを判定
-  const isUndergrand = (levelIndex === 0 && stepIndex === 0 && isNextStep === false) ? true : false;
-  const isAboveSky = (levelIndex === details.length -1 && stepIndex === details[levelIndex].length -1 && isNextStep === true) ? true : false;
+  const isUndergrand = (levelIndex === 0 && stepIndex === 0 && isNextStep === -1) ? true : false;
+  const isAboveSky = (levelIndex === details.length -1 && stepIndex === details[levelIndex].length -1 && isNextStep === 1) ? true : false;
 
   if (isUndergrand || isAboveSky) {
     console.log(isUndergrand ? "already at the first step of the first level" : "already at the last step of the last level");
@@ -317,4 +316,5 @@ export const updatePosition = (
   }
 
   setIsNextStep(null);
+
 }

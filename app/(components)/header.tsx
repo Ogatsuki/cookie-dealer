@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { site_title, site_title__screen_reader } from '../globalcontroll';
 import { useActionState } from 'react';
-import type { t__responseState_auth } from '../(auth)/actions';
-import { signOut } from '../(auth)/actions';
+import type { t__auth_serverResponseState } from '../actions';
+import { signOut } from '../actions';
 
 export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
-  const initialState: t__responseState_auth = { success: false, error: null };
+  const initialState: t__auth_serverResponseState = { success: false, error: null };
   const [, signOutAction, isPending ] = useActionState(signOut, initialState);
 
   return (

@@ -11,7 +11,8 @@ import { updatePosition } from '../utils/context/gameContext';
 export default function Home() {
   const [levelIndex, setLevelIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
-  const [isNextStep, setIsNextStep] = useState<boolean | null>(null);
+  // isNextStep: null -> 初期状態、 1 -> 次のステップへ、 -1 -> 前のステップへ、 0 -> 現在のステップをDBに保存
+  const [isNextStep, setIsNextStep] = useState<number | null>(null);
   const [previewState, setPreviewState] = useState<number>(0);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState<number | null>(null);
 

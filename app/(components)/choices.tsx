@@ -4,12 +4,12 @@ import { Fragment, useEffect, useActionState } from "react";
 import type { t__PropChildren } from "../type";
 import { optionValues } from "../../utils/context/gameContext";
 import { optionKeys } from "../../utils/context/gameContext";
-import { checking_answers, type t__responseState_answerCheck } from "../(auth)/actions";
+import { checking_answers, type t__responseState_answerCheck } from "../actions";
 
 type ChoicesProps = {
   levelIndex: number;
   stepIndex: number;
-  setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setIsNextStep: React.Dispatch<React.SetStateAction<number | null>>;
   previewState: number;
   setPreviewState: React.Dispatch<React.SetStateAction<number>>;
   selectedOptionIndex: number | null;
@@ -85,7 +85,7 @@ export default function Choices({ levelIndex, stepIndex, setIsNextStep, previewS
         {previewState === 0 && <button type="submit" disabled={selectedOptionIndex === null} className={`px-8 py-5 bg-blue-700 text-white rounded-2xl font-bold tracking-widest hover:shadow-md ${selectedOptionIndex === null ? "bg-gray-500" : "hover:cursor-pointer"}`}>Cookie送信</button>}
         {previewState === 1 && (
           <div className="flex gap-6">
-            <button type='button' onClick={() => {setIsNextStep(true); whenButtonPushed()}} className="hover:cursor-pointer px-8 py-5 bg-green-600 text-white rounded-2xl font-bold hover:shadow-md">次に進む</button>
+            <button type='button' onClick={() => {setIsNextStep(1); whenButtonPushed()}} className="hover:cursor-pointer px-8 py-5 bg-green-600 text-white rounded-2xl font-bold hover:shadow-md">次に進む</button>
             <button type='button' onClick={() => {setIsNextStep(null); whenButtonPushed()}} className="hover:cursor-pointer px-8 py-5 bg-orange-600 text-white rounded-2xl font-bold hover:shadow-md">やり直す</button>
           </div>
         )}

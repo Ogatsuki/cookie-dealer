@@ -5,7 +5,7 @@ type t__titleProps = {
   stepIndex: number;
   setLevelIndex: React.Dispatch<React.SetStateAction<number>>;
   setStepIndex: React.Dispatch<React.SetStateAction<number>>;
-  setIsNextStep: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setIsNextStep: React.Dispatch<React.SetStateAction<number | null>>;
   setPreviewState: React.Dispatch<React.SetStateAction<number>>;
   setSelectedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
@@ -13,22 +13,24 @@ type t__titleProps = {
 export default function Title({ levelIndex, stepIndex, setLevelIndex, setStepIndex, setIsNextStep, setPreviewState, setSelectedOptionIndex }: t__titleProps) {
   // step遷移のボタンが押されたらisCorrect, errorをリセット（nullにする）
   const whenNextStepPushed = () => {
-    setIsNextStep(true);
+    setIsNextStep(1);
     setPreviewState(0);
     setSelectedOptionIndex(null);
   }
   const whenPrevStepPushed = () => {
-    setIsNextStep(false);
+    setIsNextStep(-1);
     setPreviewState(0);
     setSelectedOptionIndex(null);
   }
   const whenFirstPushed = () => {
     setLevelIndex(0);
     setStepIndex(0);
+    setIsNextStep(0);
   }
   const whenLastPushed = () => {
     setLevelIndex(optionValues.length - 1);
     setStepIndex(optionValues[optionValues.length - 1].length - 1);
+    setIsNextStep(0);
   }
 
   return (
