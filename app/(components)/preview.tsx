@@ -2,7 +2,6 @@ import { urls, missions, errorMessages, explainsAtCorrected } from "../../utils/
 import { FaLock } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaWindowClose } from "react-icons/fa";
-import Explains from "./explains";
 
 type t__prevProps = {
   levelIndex: number;
@@ -13,7 +12,7 @@ type t__prevProps = {
 
 const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) => {
   return (
-    <section className="mt-13 shadow-md text-white rounded-lg overflow-hidden">
+    <section className="mt-8 shadow-md text-white rounded-lg overflow-hidden">
       <h2 className="sr-only">プレビュー画面</h2>
       <div className="flex flex-col h-full">
         <div className="flex justify-center items-center align-center h-15 bg-slate-900">
@@ -24,18 +23,15 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) 
         </div>
         <div className={`flex-1 flex flex-col px-[20%] ${previewState === 0 ? 'bg-slate-900/80' : ''} ${previewState === 1 ? 'bg-[#aeb3ae]' : ''} ${previewState === -1 ? 'bg-[#999999]' : ''}`}>
           <div className="flex flex-col">
-            {previewState === 0 && (
-              <Explains levelIndex={levelIndex} stepIndex={stepIndex} />
-            )}
             <div className="">
               {previewState === 0 && (
-                <div className="mt-7 mb-19 flex flex-col items-center">
+                <div className="mt-22 mb-30 flex flex-col items-center">
                   <h3 className="text-blue-400 font-bold text-3xl">
                     <span aria-hidden="true" className="tracking-wider">Mission</span>
                     <span className="sr-only">ミッション</span>
                   </h3>
-                  <p className="whitespace-pre-line text-[15px] mt-4">{missions[levelIndex][stepIndex]}</p>
-                  <p className="text-sm font-bold text-gray-400 mt-6">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
+                  <p className="whitespace-pre-line text-[15px] mt-6">{missions[levelIndex][stepIndex]}</p>
+                  <p className="text-sm font-bold text-gray-400 mt-5">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
                 </div>
               )}
               {previewState === 1 && (

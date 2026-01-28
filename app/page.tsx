@@ -7,6 +7,7 @@ import Title from "./(components)/title";
 import { useState, useEffect } from "react";
 import { updatePosition } from '../utils/context/gameContext';
 import { loadAchievedState } from '../utils/supabase/initialize';
+import Explains from "./(components)/explains";
 
 type t__loadAchievedResponse = {
   achievedLevelIndex: number | null;
@@ -61,6 +62,7 @@ export default function Home() {
           achievedLevelIndex={achievedLevelIndex}
           achievedStepIndex={achievedStepIndex}
         />
+        <Explains levelIndex={levelIndex} stepIndex={stepIndex} />
         <Preview levelIndex={levelIndex} stepIndex={stepIndex} previewState={previewState} />
         <MoreInfo levelIndex={levelIndex} stepIndex={stepIndex} />
         <Choices
