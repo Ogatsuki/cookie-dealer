@@ -295,7 +295,6 @@ export const updatePosition = (
   setLevelIndex: React.Dispatch<React.SetStateAction<number>>,
   setIsNextStep: React.Dispatch<React.SetStateAction<number | null>>
 ): void => {
-  console.log('a');
   // changeする場合は+-1. しない場合は0
   const levelChange = details[levelIndex][stepIndex + isNextStep] ? 0 : isNextStep;
   const stepChange = details[levelIndex][stepIndex + isNextStep] ? isNextStep : 0;
@@ -316,5 +315,4 @@ export const updatePosition = (
   }
 
   setIsNextStep(null);
-
 }

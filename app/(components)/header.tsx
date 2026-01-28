@@ -38,7 +38,7 @@ export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
                   <p>ログイン</p>
                 </Link>
                 <Link href="/register">
-                  <p>会員登録</p>
+                  <p>アカウント作成</p>
                 </Link>
               </nav>
             )}

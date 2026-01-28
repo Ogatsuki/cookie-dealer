@@ -108,8 +108,8 @@ const checking_answers = async(prevRes: t__responseState_answerCheck, formData: 
   }
   else if (data.correct_answer_index === selectedOptionIndex) {
     responseState.isCorrect = true;
-    // 正解した場合、profiles テーブルの current_level_index, current_step_index, achieved_level_index, achieved_step_index を更新
-    await update_db_profiles(levelIndex, stepIndex);
+    // 正解した場合、profiles テーブルのachieved_level_index, achieved_step_index を更新
+    update_db_profiles(levelIndex, stepIndex);
   }
   else {
     console.log('Unexpected case in answer checking.');
