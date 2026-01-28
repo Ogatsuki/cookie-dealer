@@ -24,20 +24,24 @@ export default function Title({ levelIndex, stepIndex, setLevelIndex, setStepInd
     setPreviewState(0);
     setSelectedOptionIndex(null);
   }
-  const whenFirstPushed = () => {
-    setLevelIndex(0);
-    setStepIndex(0);
-    setIsNextStep(0);
-  }
-  const whenLastPushed = () => {
-    setLevelIndex(optionValues.length - 1);
-    setStepIndex(optionValues[optionValues.length - 1].length - 1);
-    setIsNextStep(0);
-  }
+  // const whenFirstPushed = () => {
+  //   setLevelIndex(0);
+  //   setStepIndex(0);
+  //   setIsNextStep(0);
+  // }
+  // const whenLastPushed = () => {
+  //   setLevelIndex(optionValues.length - 1);
+  //   setStepIndex(optionValues[optionValues.length - 1].length - 1);
+  //   setIsNextStep(0);
+  // }
 
   const isBtnNextDisabled =
     (achievedLevelIndex === null && achievedStepIndex === null && levelIndex === 0 && stepIndex === 0) ||
     ((achievedLevelIndex !==null && achievedStepIndex !== null) && achievedLevelIndex <= levelIndex && achievedStepIndex < stepIndex);
+  
+    // console.log("levelIndex:", levelIndex, "stepIndex:", stepIndex , "achievedLevelIndex:", achievedLevelIndex, "achievedStepIndex:", achievedStepIndex, "levelIndex:", levelIndex, "stepIndex:", stepIndex, "isBtnNextDisabled:", isBtnNextDisabled, 'caliculated:', 
+    //   (achievedLevelIndex === null && achievedStepIndex === null && levelIndex === 0 && stepIndex === 0) ||
+    // ((achievedLevelIndex !==null && achievedStepIndex !== null) && (achievedStepIndex < stepIndex)));
 
   return (
     <div className="flex flex-col items-center mt-18">

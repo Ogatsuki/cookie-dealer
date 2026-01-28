@@ -14,6 +14,8 @@ type ChoicesProps = {
   setPreviewState: React.Dispatch<React.SetStateAction<number>>;
   selectedOptionIndex: number | null;
   setSelectedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  setAchievedLevelIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  setAchievedStepIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 
@@ -32,7 +34,7 @@ const SetOptionValues: React.FC<t__PropChildren> = ({levelIndex, stepIndex, opti
 }
 
 
-export default function Choices({ levelIndex, stepIndex, setIsNextStep, previewState, setPreviewState, selectedOptionIndex, setSelectedOptionIndex }: ChoicesProps) {
+export default function Choices({ levelIndex, stepIndex, setIsNextStep, previewState, setPreviewState, selectedOptionIndex, setSelectedOptionIndex, setAchievedLevelIndex, setAchievedStepIndex }: ChoicesProps) {
   const initialResponse: t__responseState_answerCheck = { isCorrect: null, error: null, timeStamp: null };
   const [response, action] = useActionState(checking_answers, initialResponse)
   const whenButtonPushed = () => {
@@ -46,6 +48,8 @@ export default function Choices({ levelIndex, stepIndex, setIsNextStep, previewS
     if (response.timeStamp !== null) {
       // 正解の取得後、クリーンの正解・不正解の表示をあわせてきりかえる
       setPreviewState(response.isCorrect ? 1 : -1);
+      setAchievedLevelIndex(levelIndex);
+      setAchievedStepIndex(stepIndex);
     }
   }, [response.isCorrect, response.timeStamp, setPreviewState]);
 

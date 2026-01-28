@@ -50,7 +50,7 @@ export default function Home() {
 
   return (
     <div className="px-4 flex justify-center flex-1">
-      <div className="w-full max-w-4xl flex flex-col">
+      <div className="w-full max-w-[750px] flex flex-col">
         <Title
           levelIndex={levelIndex}
           stepIndex={stepIndex}
@@ -73,6 +73,8 @@ export default function Home() {
           setPreviewState={setPreviewState}
           selectedOptionIndex={selectedOptionIndex}
           setSelectedOptionIndex={setSelectedOptionIndex}
+          setAchievedLevelIndex={setAchievedLevelIndex}
+          setAchievedStepIndex={setAchievedStepIndex}
           />
       </div>
     </div>

@@ -12,7 +12,7 @@ type t__prevProps = {
 
 const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) => {
   return (
-    <section className="mt-8 shadow-md text-white rounded-lg overflow-hidden">
+    <section className="mt-7 shadow-md text-white rounded-lg overflow-hidden">
       <h2 className="sr-only">プレビュー画面</h2>
       <div className="flex flex-col h-full">
         <div className="flex justify-center items-center align-center h-15 bg-slate-900">
@@ -25,7 +25,7 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) 
           <div className="flex flex-col">
             <div className="">
               {previewState === 0 && (
-                <div className="mt-22 mb-30 flex flex-col items-center">
+                <div className="mt-15 mb-22 flex flex-col items-center">
                   <h3 className="text-blue-400 font-bold text-3xl">
                     <span aria-hidden="true" className="tracking-wider">Mission</span>
                     <span className="sr-only">ミッション</span>
