@@ -1,10 +1,10 @@
 export type t__Props = {
-  level: number;
-  step: number;
+  levelIndex: number;
+  stepIndex: number;
 };
 
 export type t__PropChildren = {
-  level: number;
-  step: number;
-  i_option: number;
+  levelIndex: number;
+  stepIndex: number;
+  optionIndex: number;
 }

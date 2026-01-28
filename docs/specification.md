@@ -27,24 +27,14 @@
     *   **未ログイン:** ブラウザ（Local Storage/Cookie）に保存。
     *   **ログイン済み:** データベース（Supabase）に保存し、スマホやPC間で同期。
 
+その他：クッキーマイル
+- 問題を解けば解くほど溜まる。
+
 ---
 
-## 3. カリキュラム (Level Design)
-
-### Level 1: 1st Party Cookie
-*   **課題:** `myshop.com` へのリクエスト。
-*   **正解:** 同ドメインのCookieのみ送信可能。
-
-### Level 2: Subdomain Scope
-*   **課題:** `login.secure.net` へのリクエスト。
-*   **正解:** 親ドメイン `secure.net` のCookieは送信可、兄弟ドメイン `mail.secure.net` は不可。
-
-### Level 3: 3rd Party Cookie
-*   **課題:** `blog.net` から `ad.com` への画像リクエスト。
-*   **正解:** `ad.com` のCookieが送信される（3rd Party Cookie）。
-
-### Level 4: Tracking & Privacy
-*   **課題:** 追跡用IDを含んだCookieの送信によるリターゲティング広告の仕組み体験。
+## 3. カリキュラム構成案
+*   HTTPステートレス性、Cookieのスコープ、3rd Party Cookie、セキュリティリスクなどを段階的に学ぶ構成とする。
+*   （具体的なレベルデザインや問題内容は別途設計）
 
 ---
 
@@ -61,16 +51,16 @@
     *   「進捗をクラウドに保存する（ログイン/登録）」ボタン。
 
 ### バックエンド (Server Actions)
-*   **`checkAnswer(levelId, selectedCookies)`**
+*   **認証フロー (Auth):**
+    *   **メール認証方式:** Supabase Authを使用するが、メール確認機能（Confirm Email）は**OFF**とし、即時登録完了とする。
+    *   **サインアップ/ログイン:** アプリケーション側での事前のユーザー存在チェック（User Enumeration）は**行わない**。
+    *   **エラーハンドリング:** クライアントから直接Server Actionを通じてSupabaseの `signUp` / `signInWithPassword` を呼び出し、返ってきた結果（成功・失敗・登録済みエラー等）をそのままユーザーにフィードバックする。
+*   **学習判定:**
     *   正誤判定ロジック。正解データはサーバー内に隠蔽。
     *   ログインユーザーの場合、クリアしたらDBの進捗データを更新する。
 
 ### データベース (Supabase)
-*   **`profiles` テーブル:**
-    *   `id`: UUID (Auth ID)
-    *   `email`: String
-    *   `cleared_levels`: Integer[] (例: `[1, 2]` ならLevel 1, 2をクリア済み)
-    *   `last_active_at`: Timestamp
+*   **テーブル構成:** 別途詳細設計を行う（現在は未定）。
 
 ---
 
@@ -78,14 +68,15 @@
 
 ### Next.js (App Router)
 *   **Server Actions:** 
-    APIエンドポイントを別途構築することなく、関数としてサーバーサイドロジック（正誤判定・DB操作）を実装できるため採用。これにより、フロントエンドに正解を持たせないセキュアな設計を低コストで実現。
+    APIエンドポイントを別途構築することなく、関数としてサーバーサイドロジック（正誤判定・DB操作）を実装できるため採用。
 *   **Middleware:**
     認証状態に基づくリダイレクトや、セッション管理をエッジで処理するため。
 
 ### Supabase
-*   **Auth & Database:**
-    「学習進捗のクロスデバイス同期」という実用的な機能を実現するため。
-    ユーザーがPCで学習した続きをスマホで行えるよう、RDBを用いたデータ永続化と堅牢な認証システムを採用。
+*   **Auth:**
+    メールサーバー構築のコスト（制限）とセキュリティリスクを回避するため、Supabase Authに全面的に委譲する設計を採用。
+*   **Database:**
+    ユーザーの学習進捗データの永続化に使用。
 
 ---
 

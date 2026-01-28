@@ -1,67 +1,67 @@
-import type { t__Props } from "../type";
+import { urls, missions, errorMessages, explainsAtCorrected } from "../../utils/context/gameContext";
+import { FaLock } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 
-const urls = [
-  [
-    "myshop.com/cart", "sample1-2.example.com",
-  ],
-  [
-    "sample2-1.com", "sample2-2.example.com",
-  ],
-  [
-    "sample3-1.com", "sample3-2.example.com",
-  ]
-];
-
-const missions =[
-  [
-    "myshop.comへのアクセスリクエストが発生しました。\n適切なCookieを選択してリクエストを承認してください。", "1-2適切なcookieを設定して、example.comにアクセスしてください。",
-  ],
-  [
-    "2-1適切なcookieを設定して、example.comにアクセスしてください。", "2-2適切なcookieを設定して、example.comにアクセスしてください。",
-  ],
-  [
-    "3-1適切なcookieを設定して、example.comにアクセスしてください。", "3-2適切なcookieを設定して、example.comにアクセスしてください。",
-  ]
-];
-
-const errorMessages = [
-  [
-    "【送信失敗: ドメイン不一致】\n\n選択したCookieのDomain属性と、リクエスト先のHost（myshop.com）が一致しません。\nブラウザはセキュリティのため、関係のないドメインへのCookie送信をブロックしました。\n正しいドメインのCookieを選び直してください。",
-    "text-error-1-2"
-  ],
-  [
-    "text-error-2-1",
-    "text-error-2-2"
-  ],
-  [
-    "text-error-3-1",
-    "text-error-3-2"
-  ]
-]
+type t__prevProps = {
+  levelIndex: number;
+  stepIndex: number;
+  previewState: number;
+}
 
 
-const Preview: React.FC<t__Props> = ({level, step}) => {
+const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) => {
   return (
-    <section className="mt-10 shadow-md text-white rounded-lg overflow-hidden aspect-video">
+    <section className="mt-7 shadow-md text-white rounded-lg overflow-hidden">
       <h2 className="sr-only">プレビュー画面</h2>
       <div className="flex flex-col h-full">
         <div className="flex justify-center items-center align-center h-15 bg-slate-900">
-          <div className="flex tracking-widest w-full max-w-2xl bg-slate-800 px-6 py-1 rounded-md border border-slate-600 text-sm">
+          <div className="flex tracking-widest w-full max-w-2xl bg-slate-800 pl-5 pr-6 py-1 rounded-md border border-slate-600 text-sm">
             <h3 className="sr-only">URL</h3>
-            <p className="flex-1 font-bold"><span className="text-gray-400">https:// </span>{urls[level][step]}</p>
+            <p className="flex-1 font-bold flex"><FaLock className="mr-3 font-medium text-gray-100" /><span className="text-gray-400 whitespace-pre">https:// </span>{urls[levelIndex][stepIndex]}</p>
           </div>
         </div>
-        <div className="bg-slate-900/80 flex-1 flex flex-col justify-start items-center px-[25%]">
-          <h3 className="text-blue-400 font-bold text-2xl mt-24">
-            <span aria-hidden="true">Mission</span>
-            <span className="sr-only">ミッション</span>
-          </h3>
-          <p className="whitespace-pre-line mt-5">{missions[level][step]}</p>
-          <p className="text-xs font-bold text-gray-400 mt-8">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
-        </div>
-        <div className="sr-only">
-          <h3>送信失敗</h3>
-          <p>{errorMessages[level][step]}</p>
+        <div className={`flex-1 flex flex-col px-[20%] ${previewState === 0 ? 'bg-slate-900/80' : ''} ${previewState === 1 ? 'bg-[#aeb3ae]' : ''} ${previewState === -1 ? 'bg-[#999999]' : ''}`}>
+          <div className="flex flex-col">
+            <div className="">
+              {previewState === 0 && (
+                <div className="mt-15 mb-22 flex flex-col items-center">
+                  <h3 className="text-blue-400 font-bold text-3xl">
+                    <span aria-hidden="true" className="tracking-wider">Mission</span>
+                    <span className="sr-only">ミッション</span>
+                  </h3>
+                  <p className="whitespace-pre-line text-[15px] mt-6">{missions[levelIndex][stepIndex]}</p>
+                  <p className="text-sm font-bold text-gray-400 mt-5">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
+                </div>
+              )}
+              {previewState === 1 && (
+                <>
+                  <div className="sr-only">
+                    <h3>送信成功</h3>
+                    <p>{explainsAtCorrected[levelIndex][stepIndex]}</p>
+                  </div>
+                  <div className="flex flex-col items-center mt-16 mb-24">
+                    <h3 className="font-bold text-green-600 text-3xl tracking-widest">送信成功！</h3>
+                    <p className="mt-6">{explainsAtCorrected[levelIndex][stepIndex]}</p>
+                    <FaCheckCircle className="mt-10 size-[100px] text-green-600" />
+                  </div>
+                </>
+              )}
+              {previewState === -1 && (
+                <>
+                  <div className="sr-only">
+                    <h3>送信失敗</h3>
+                    <p>{errorMessages[levelIndex][stepIndex]}</p>
+                  </div>
+                  <div className="flex flex-col items-center mt-16 mb-24">
+                    <h3 className="font-bold text-red-500 text-3xl tracking-widest">送信失敗</h3>
+                    <p className="mt-6">{errorMessages[levelIndex][stepIndex]}</p>
+                    <FaWindowClose className="mt-10 size-[100px] text-red-500" />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </section>

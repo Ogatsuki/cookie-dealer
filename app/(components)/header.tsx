@@ -1,12 +1,14 @@
-'use client';
+'use client'
 
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { site_title, site_title__screen_reader } from '../globalcontroll';
+import { useActionState } from 'react';
+import type { t__auth_serverResponseState } from '../actions';
+import { signOut } from '../actions';
 
-export default function Header() {
-  const pathname = usePathname();
-  const isTop = pathname === '/';
+export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
+  const initialState: t__auth_serverResponseState = { success: false, error: null };
+  const [, signOutAction, isPending ] = useActionState(signOut, initialState);
 
   return (
       <header className="flex justify-center bg-slate-800/80">
@@ -17,16 +19,30 @@ export default function Header() {
               <span className="sr-only">{site_title__screen_reader}</span>
             </h1>
           </Link>
-          {isTop && (
-            <nav className='flex justify-between max-w-[150px] w-full text-sm text-white'>
-              <Link href="/login">
-                <p>ログイン</p>
-              </Link>
-              <Link href="/register">
-                <p>会員登録</p>
-              </Link>
-            </nav>
-          )}
+          <div className='text-sm flex items-center'>
+            {isLoggedIn && !isPending && (
+              <nav className='text-white'>
+                <form action={signOutAction}>
+                  <button>ログアウト</button>
+                </form>
+              </nav>
+            )}
+            {isLoggedIn && isPending && (
+              <nav className='text-white'>
+                <p>ログアウト中...</p>
+              </nav>
+            )}
+            {!isLoggedIn && (
+              <nav className='flex justify-between w-full text-white gap-5'>
+                <Link href="/login">
+                  <p>ログイン</p>
+                </Link>
+                <Link href="/register">
+                  <p>アカウント作成</p>
+                </Link>
+              </nav>
+            )}
+          </div>
         </div>
       </header>
   )

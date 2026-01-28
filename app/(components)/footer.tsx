@@ -3,7 +3,7 @@ import {site_title, site_title__screen_reader } from '../globalcontroll';
 
 export default function Footer() {
   return (
-    <footer className="h-40 mt-16 flex justify-center items-center bg-slate-800/90 text-white">
+    <footer className="h-30 flex justify-center items-center bg-slate-800/90 text-white">
       <div className='w-full max-w-4xl p-4'>
         <Link href="/">
           <h2 className='text-xl'>
