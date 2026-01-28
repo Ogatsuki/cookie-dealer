@@ -19,7 +19,7 @@ export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
               <span className="sr-only">{site_title__screen_reader}</span>
             </h1>
           </Link>
-          <div className='text-sm flex items-center gap-4'>
+          <div className='text-sm flex items-center'>
             {isLoggedIn && !isPending && (
               <nav className='text-white'>
                 <form action={signOutAction}>
@@ -33,7 +33,7 @@ export default function Header({isLoggedIn}: {isLoggedIn: boolean}) {
               </nav>
             )}
             {!isLoggedIn && (
-              <nav className='flex justify-between max-w-[150px] w-full text-white gap-4'>
+              <nav className='flex justify-between w-full text-white gap-5'>
                 <Link href="/login">
                   <p>ログイン</p>
                 </Link>

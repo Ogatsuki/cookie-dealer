@@ -22,20 +22,20 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) 
             <p className="flex-1 font-bold flex"><FaLock className="mr-3 font-medium text-gray-100" /><span className="text-gray-400 whitespace-pre">https:// </span>{urls[levelIndex][stepIndex]}</p>
           </div>
         </div>
-        <div className={`flex-1 flex flex-col px-[20%] ${previewState === 0 ? 'bg-slate-900/80' : ''} ${previewState === 1 ? 'bg-green-700/50' : ''} ${previewState === -1 ? 'bg-red-700/50' : ''}`}>
-          <div className="flex flex-col items-center">
+        <div className={`flex-1 flex flex-col px-[20%] ${previewState === 0 ? 'bg-slate-900/80' : ''} ${previewState === 1 ? 'bg-[#aeb3ae]' : ''} ${previewState === -1 ? 'bg-[#999999]' : ''}`}>
+          <div className="flex flex-col">
             {previewState === 0 && (
               <Explains levelIndex={levelIndex} stepIndex={stepIndex} />
             )}
-            <div className="mt-14 mb-22">
+            <div className="">
               {previewState === 0 && (
-                <div className="flex flex-col items-center space-y-3">
-                  <h3 className="text-blue-400 font-bold text-2xl">
-                    <span aria-hidden="true">Mission</span>
+                <div className="mt-7 mb-19 flex flex-col items-center">
+                  <h3 className="text-blue-400 font-bold text-3xl">
+                    <span aria-hidden="true" className="tracking-wider">Mission</span>
                     <span className="sr-only">ミッション</span>
                   </h3>
-                  <p className="whitespace-pre-line">{missions[levelIndex][stepIndex]}</p>
-                  <p className="text-sm font-bold text-gray-400 mt-5">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
+                  <p className="whitespace-pre-line text-[15px] mt-4">{missions[levelIndex][stepIndex]}</p>
+                  <p className="text-sm font-bold text-gray-400 mt-6">↓ 下の選択肢の中から適切なcookieを選んでください。↓</p>
                 </div>
               )}
               {previewState === 1 && (
@@ -44,10 +44,10 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) 
                     <h3>送信成功</h3>
                     <p>{explainsAtCorrected[levelIndex][stepIndex]}</p>
                   </div>
-                  <div className="flex flex-col items-center">
-                    <h3 className="font-bold text-green-600 text-2xl">送信成功！</h3>
-                    <p className="mt-4">{explainsAtCorrected[levelIndex][stepIndex]}</p>
-                    <FaCheckCircle className="mt-6 size-[100px] text-green-600" />
+                  <div className="flex flex-col items-center mt-16 mb-24">
+                    <h3 className="font-bold text-green-600 text-3xl tracking-widest">送信成功！</h3>
+                    <p className="mt-6">{explainsAtCorrected[levelIndex][stepIndex]}</p>
+                    <FaCheckCircle className="mt-10 size-[100px] text-green-600" />
                   </div>
                 </>
               )}
@@ -57,10 +57,10 @@ const Preview: React.FC<t__prevProps> = ({levelIndex, stepIndex, previewState}) 
                     <h3>送信失敗</h3>
                     <p>{errorMessages[levelIndex][stepIndex]}</p>
                   </div>
-                  <div className="flex flex-col items-center space-y-3">
-                    <h3 className="font-bold text-red-500 text-2xl">送信失敗</h3>
-                    <p>{errorMessages[levelIndex][stepIndex]}</p>
-                    <FaWindowClose />
+                  <div className="flex flex-col items-center mt-16 mb-24">
+                    <h3 className="font-bold text-red-500 text-3xl tracking-widest">送信失敗</h3>
+                    <p className="mt-6">{errorMessages[levelIndex][stepIndex]}</p>
+                    <FaWindowClose className="mt-10 size-[100px] text-red-500" />
                   </div>
                 </>
               )}

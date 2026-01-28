@@ -116,7 +116,7 @@ export const optionValues = [
   [
     // Step 0: blog.example.com (親ドメインからの継承)
     [
-      [".example.com", "theme", "dark_mode"],
+      ["example.com", "theme", "dark_mode"],
       ["other-site.com", "ad_id", "g4g5g6"],
       ["random.net", "uid", "guest"],
     ],

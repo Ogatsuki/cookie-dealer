@@ -8,9 +8,11 @@ type t__titleProps = {
   setIsNextStep: React.Dispatch<React.SetStateAction<number | null>>;
   setPreviewState: React.Dispatch<React.SetStateAction<number>>;
   setSelectedOptionIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  achievedLevelIndex: number | null;
+  achievedStepIndex: number | null;
 }
 
-export default function Title({ levelIndex, stepIndex, setLevelIndex, setStepIndex, setIsNextStep, setPreviewState, setSelectedOptionIndex }: t__titleProps) {
+export default function Title({ levelIndex, stepIndex, setLevelIndex, setStepIndex, setIsNextStep, setPreviewState, setSelectedOptionIndex, achievedLevelIndex, achievedStepIndex }: t__titleProps) {
   // step遷移のボタンが押されたらisCorrect, errorをリセット（nullにする）
   const whenNextStepPushed = () => {
     setIsNextStep(1);
@@ -33,17 +35,21 @@ export default function Title({ levelIndex, stepIndex, setLevelIndex, setStepInd
     setIsNextStep(0);
   }
 
+  const isBtnNextDisabled =
+    (achievedLevelIndex === null && achievedStepIndex === null && levelIndex === 0 && stepIndex === 0) ||
+    ((achievedLevelIndex !==null && achievedStepIndex !== null) && achievedLevelIndex <= levelIndex && achievedStepIndex < stepIndex);
+
   return (
     <div className="flex flex-col items-center mt-18">
       <h2 className="font-bold text-slate-900 flex gap-1 text-3xl tracking-wider">{explains_title[levelIndex]}</h2>
       <div className="mt-4 flex text-slate-900/80 items-center">
-        <button type='button' className={`hover:cursor-pointer flex leading-none text-gray-400 translate-x-1 ${levelIndex === 0 ? 'invisible' : ''}`} onClick={whenFirstPushed}><span className="block rotate-270">▲</span><span className="block rotate-270">▲</span></button>
-        <button type="button" className={`hover:cursor-pointer ml-3 leading-none text-gray-400 rotate-270 ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenPrevStepPushed}>▲</button>
+        {/* <button type='button' className={`hover:cursor-pointer flex leading-none text-gray-400 translate-x-1 ${levelIndex === 0 ? 'invisible' : ''}`} onClick={whenFirstPushed}><span className="block rotate-270">▲</span><span className="block rotate-270">▲</span></button> */}
+        <button type="button" className={`hover:cursor-pointer ml-3 leading-none text-blue-400 rotate-270 ${levelIndex === 0 && stepIndex === 0 ? 'invisible' : ''}`} onClick={whenPrevStepPushed}>▲</button>
         <div className="mx-5 text-slate-900 text-base flex whitespace-pre leading-none">
           <span className="">Level : {levelIndex + 1}</span> - <span className=""> Step : {stepIndex + 1}</span>
         </div>
-        <button type="button" className={`hover:cursor-pointer mr-3 leading-none text-gray-400 rotate-90 ${levelIndex === optionValues.length - 1 && stepIndex === optionValues[levelIndex].length - 1 ? 'invisible' : ''}`} onClick={whenNextStepPushed}>▲</button>
-        <button type='button' className={`hover:cursor-pointer flex leading-none text-gray-400 ${levelIndex === optionValues.length - 1 ? 'invisible' : ''}`} onClick={whenLastPushed}><span className="block rotate-90">▲</span><span className="block rotate-90">▲</span></button>
+        <button type="button" className={`mr-3 leading-none rotate-90 ${isBtnNextDisabled ? 'text-gray-300 hover:cursor-not-allowed' : 'hover:cursor-pointer text-blue-400'} ${levelIndex === optionValues.length - 1 && stepIndex === optionValues[levelIndex].length - 1 ? 'invisible' : ''}`} onClick={whenNextStepPushed} disabled={isBtnNextDisabled}>▲</button>
+        {/* <button type='button' className={`flex leading-none ${isBtnNextDisabled ? 'text-gray-300 hover:cursor-not-allowed' : 'hover:cursor-pointer text-gray-500'} ${levelIndex === optionValues.length - 1 ? 'invisible' : ''}`} onClick={whenLastPushed} disabled={isBtnNextDisabled}><span className="block rotate-90">▲</span><span className="block rotate-90">▲</span></button> */}
       </div>
     </div>
   )
