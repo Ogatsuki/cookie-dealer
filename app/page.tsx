@@ -49,7 +49,7 @@ export default function Home() {
   }, [levelIndex, stepIndex, isNextStep, achievedLevelIndex, achievedStepIndex, setIsNextStep, setStepIndex, setLevelIndex]);
 
   return (
-    <div className="px-4 flex justify-center flex-1">
+    <div className="px-[6%] flex justify-center flex-1">
       <div className="w-full max-w-[750px] flex flex-col">
         <Title
           levelIndex={levelIndex}

@@ -55,13 +55,13 @@ export default function Choices({ levelIndex, stepIndex, setIsNextStep, previewS
 
   return (
     <>
-      <section className="mt-8">
+      <section className="mt-8 @container">
         <h2 className="sr-only">選択肢一覧</h2>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid gap-x-6 gap-y-8 place-items-center sm:grid-cols-2 md:grid-cols-3">
           {optionValues[levelIndex][stepIndex].map((_, i) => {
             return (
               <Fragment key={i}>
-                <div className={`w-full hover:cursor-pointer rounded-md px-5 py-5 min-w-[220px] h-fit shadow-md ring-1 transition-all duration-100 ${selectedOptionIndex === i ? "ring-4" : ""}` +
+                <div className={`max-sm:min-w-[280px] w-[75%] sm:w-full hover:cursor-pointer rounded-md px-5 py-5 h-fit shadow-md ring-1 transition-all duration-100 ${selectedOptionIndex === i ? "ring-4" : ""}` +
                   (i == 0 ? ` bg-lime-100/50 ring-lime-400` : "") +
                   (i == 1 ? ` bg-blue-100/50 ring-blue-400` : "") +
                   (i == 2 ? ` bg-purple-100/50 ring-purple-400` : "") +
